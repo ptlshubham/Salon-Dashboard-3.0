@@ -1,0 +1,326 @@
+<div class="main-content">
+    <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3"
+        aria-hidden="true" *ngIf="selctpr !== undefined">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="align-items-right closebutton">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-xl-6">
+                            <div class=" page-carousel">
+                                <ngb-carousel>
+                                    <ng-template ngbSlide *ngFor="let b of images">
+                                        <img src="http://31.220.111.153:2300{{b.listimages}}" alt="Random first slide">
+                                        <div class="carousel-caption">
+                                        </div>
+                                    </ng-template>
+                                </ngb-carousel>
+                            </div>
+                            <!-- <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+                                <div class="carousel-inner">
+
+                                    <div class="carousel-item active">
+                                        <h6>
+                                            <img src="http://31.220.111.153:2300{{frontimage.listimages}}"
+                                                class="card-img-top" alt="Laptop " />
+                                        </h6>
+                                    </div>
+                                    <div class="carousel-item" *ngFor="let b of images">
+                                        <h6>
+                                            <img src="http://31.220.111.153:2300{{b.listimages}}" class="card-img-top"
+                                                alt="Laptop " />
+                                        </h6>
+                                    </div>
+                                    
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleFade" role="button"
+                                    data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleFade" role="button"
+                                    data-slide="next" style="color: black;">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div> -->
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-xl-6">
+                            <!-- <div [{ngModel}]="productsModel.name"></div> -->
+                            <h5> {{selctpr.name}}</h5>
+                            <h4 class="me-1">₹ {{selctpr.price}}</h4>
+                            <div class="d-flex flex-row">
+                                <div class="text-danger mb-1 me-2">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="pl-1">
+                                    310
+                                </div>
+                            </div>
+                            <div>
+                                <p class=" mb-4 mb-md-0">
+                                    {{selctpr.descripition}}
+
+                                </p>
+                            </div>
+                            <h6 class="text-success">Free shipping!</h6>
+                            <br>
+                            <div class="row">
+                                <div class="col-12 d-grid">
+                                    <button class="col-5 btn btn-primary " type="button" data-dismiss="modal"
+                                        aria-label="cartclose"><span><i class="fas fa-shopping-cart"></i></span> Add to
+                                        Cart</button>
+                                    <div class="btn-group btn-group-sm col-3">
+                                        <button class="btn btn-outline-default btn-round"
+                                            (click)="decre(selctpr.index)"> <i class="nc-icon nc-simple-delete "></i>
+                                        </button>
+                                        <div class="Quantity" value="" [(ngModel)]="selctpr.quant">{{selctpr.quant}}
+
+                                        </div>
+                                        <button class="btn btn-outline-default btn-round"
+                                            (click)="incre(selctpr.index)"> <i class="nc-icon nc-simple-add "></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card-body cart-nav">
+                            <div class="nav-tabs-navigation">
+                                <div class="nav-tabs-wrapper">
+                                    <ul id="tabs" class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#home" role="tab"
+                                                aria-expanded="true">Specifications</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#reviews" role="tab"
+                                                aria-expanded="false">Reviews</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="my-tab-content" class="tab-content text-center">
+                                <div class="tab-pane active" id="home" role="tabpanel" aria-expanded="true">
+                                    <p>Larger, yet dramatically thinner. More powerful, but remarkably power efficient.
+                                        With a smooth metal surface that seamlessly meets the new Retina HD display.</p>
+                                </div>
+                                <div class="tab-pane" id="reviews" role="tabpanel" aria-expanded="false">
+                                    <div class="row d-flex justify-content-around">
+                                        <div class="col-3 align-self-center justify-content-end">
+                                            <h1>
+                                                3.5
+                                                <span class="text-danger">
+                                                    <i class="fa fa-star"></i>
+                                                </span>
+                                            </h1>
+                                            <div class="btn btn-primary">
+                                                <i class="fa fa-comments"></i> Add A Review
+                                            </div>
+                                        </div>
+                                        <div class="col-9">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-2 justify-content-end">
+                                                            <h6>
+                                                                5 <span class="text-danger">
+                                                                    <i class="fa fa-star"></i>
+                                                                </span>
+                                                                <span class="small">
+                                                                    (20)
+                                                                </span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-10 justify-content-start">
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-success"
+                                                                    role="progressbar" style="width: 50%"
+                                                                    aria-valuenow="100" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-2 justify-content-end">
+                                                            <h6>
+                                                                4 <span class="text-danger">
+                                                                    <i class="fa fa-star"></i>
+                                                                </span>
+                                                                <span class="small">
+                                                                    (10)
+                                                                </span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-10 justify-content-start">
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-success"
+                                                                    role="progressbar" style="width: 30%"
+                                                                    aria-valuenow="30" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-2 justify-content-end">
+                                                            <h6>
+                                                                3 <span class="text-danger">
+                                                                    <i class="fa fa-star"></i>
+                                                                </span>
+                                                                <span class="small">
+                                                                    (15)
+                                                                </span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-10 justify-content-start">
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-success"
+                                                                    role="progressbar" style="width: 40%"
+                                                                    aria-valuenow="30" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-2 justify-content-end">
+                                                            <h6>
+                                                                2 <span class="text-danger">
+                                                                    <i class="fa fa-star"></i>
+                                                                </span>
+                                                                <span class="small">
+                                                                    (5)
+                                                                </span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-10 justify-content-start">
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-warning"
+                                                                    role="progressbar" style="width: 10%"
+                                                                    aria-valuenow="30" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-2 justify-content-end">
+                                                            <h6>
+                                                                1 <span class="text-danger">
+                                                                    <i class="fa fa-star"></i>
+                                                                </span>
+                                                                <span class="small">
+                                                                    (10)
+                                                                </span>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-10 justify-content-start">
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-danger"
+                                                                    role="progressbar" style="width: 30%"
+                                                                    aria-valuenow="30" aria-valuemin="0"
+                                                                    aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid searchbar">
+        <div class="row">
+            <div class=" col-9 col-sm-9 col-md-9 col-xl-9 col-lg-9 ">
+                <div class="form-group">
+                    <input type="search" id="form1" class="form-control" placeholder="Search..." [(ngModel)]="search"
+                        (ngModelChange)="Search()" aria-label="Search" />
+
+                </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-xl-2 col-lg-2" style="margin-top:-10px;">
+                <div class="dropdown">
+                    <button class="dropdown-toggle btn btn-primary btn-block" type="button" name="dropdownMenuButton"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ selectedName }}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-header">Select Category</div>
+                        <div *ngFor="let pos of CategoryList">
+                            <a class="dropdown-item" (click)="selectedCategory(pos.id)">{{pos.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row ">
+            <div class=" col-sm-2 col-md-3 col-xl-3 " *ngFor="let a of products; let i=index">
+                <div class="card">
+                    <div class="card-body " data-target="#noticeModal" data-toggle="modal" (click)="selectedProd(a,i)">
+                        <div class="row justify-content-between d-flex ">
+                            <img src="http://31.220.111.153:2300{{a.image}}" class="card-img-top " alt="Laptop " />
+                            <div class="col-sm-8 col-xs-8">
+                                <h6>{{a.name}}</h6>
+                            </div>
+                            <div class="col-sm-4 col-xs-4">
+                                <h6> ₹ {{a.price}}</h6>
+                            </div>
+                            <div class="col-sm-12">
+                                <h6>
+                                    <span>{{a.category}}</span>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between ">
+                        <div class="btn-group btn-group-sm ">
+                            <button class="btn btn-outline-default btn-round " (click)="decre(i) ">
+                                <i class="nc-icon nc-simple-delete "></i> </button>
+                            <div class="Quantity ">
+                                {{a.quant}}
+                            </div>
+                            <button class="btn btn-outline-default btn-round " (click)="incre(i) ">
+                                <i class="nc-icon nc-simple-add "></i> </button>
+                            <!-- </b> -->
+                        </div>
+                        <div class="btn btn-primary buy " (click)="saveCart(a)">
+                            Buy Now
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

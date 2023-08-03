@@ -1,0 +1,1011 @@
+<div class="main-content">
+    <div class="card" *ngIf="!selectCustomer && !isDashboard">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="card-title">Add Customer</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" name="CustForm" #CustForm="ngForm">
+                <div class="row">
+                    <label class="col-md-2 col-form-label">First Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="fname" name="fname"
+                                [(ngModel)]="customerModel.fname" placeholder=" Enter First Name " required value=""
+                                pattern="^[a-zA-Z]+$"   #fname="ngModel" />
+                        </div>
+                        <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class="alert alert-danger">
+                            <div *ngIf="fname.errors.required">
+                                First Name is required
+                            </div>
+                            <div [hidden]="!fname.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Last Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="lname" name="lname"
+                                [(ngModel)]="customerModel.lname" placeholder=" Enter Last Name" required value=""
+                                pattern="^[a-zA-Z]+$"   #lname="ngModel" />
+                        </div>
+                        <div *ngIf="lname.errors && (lname.dirty || lname.touched)" class="alert alert-danger">
+                            <div *ngIf="lname.errors.required">
+                                Last Name is required
+                            </div>
+                            <div [hidden]="!lname.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Email</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="email" name="email"
+                                [(ngModel)]="customerModel.email" placeholder=" Enter Email Address" value=""
+                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  
+                                #email="ngModel" />
+                        </div>
+                        <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                            <div *ngIf="email.errors.required">
+                                Email Address is required.
+                            </div>
+                            <div [hidden]="!email.hasError('pattern')">Email format should be
+                                <small><b>joe@abc.com</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Contact Number</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="contact" [(ngModel)]="customerModel.contact"
+                                name="contact" placeholder="Enter Contact Number" required value=""
+                                pattern="^[0-9].{9,9}$"   #contact="ngModel" />
+                        </div>
+                        <div *ngIf="contact.errors && (contact.dirty || contact.touched)" class="alert alert-danger">
+                            <div *ngIf="contact.errors.required">
+                                contact Address is required.
+                            </div>
+                            <div [hidden]="!contact.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="whatsapp" [(ngModel)]="customerModel.whatsapp"
+                                name="whatsapp" placeholder="Enter Whatsapp Number" required value=""
+                                pattern="^[0-9].{9,9}$"   #whatsapp="ngModel" />
+                        </div>
+                        <div *ngIf="whatsapp.errors && (whatsapp.dirty || whatsapp.touched)" class="alert alert-danger">
+                            <div *ngIf="whatsapp.errors.required">
+                                whatsapp Address is required.
+                            </div>
+                            <div [hidden]="!whatsapp.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Address</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <textarea id="address" class="form-control validate" name="address" rows="4" cols="54"
+                                [(ngModel)]="customerModel.address" placeholder="Enter Address" value=""
+                                pattern="[#\d+ ([^,]+), ([A-Z]{2}) (\d{5})]"  
+                                #address="ngModel"> </textarea>
+                        </div>
+                        <div *ngIf="address.errors && (address.dirty || address.touched)" class="alert alert-danger">
+                            <div *ngIf="address.errors.required">
+                                Address is required
+                            </div>
+                            <div [hidden]="!address.errors('pattern')">
+                                Enter Only Numbers, Characters and Special Charatcters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Select Gender</label>
+                    <div class="col-md-2">
+                        <div class="form-check-radio">
+                            <label class="form-check-label" style="color: black !important">
+                                <input #genm class="form-check-input" name="gender" [(ngModel)]="customerModel.gender"
+                                    type="radio" value="male" ngModel />
+                                Male
+                                <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-check-radio">
+                            <label class="form-check-label" style="color: black !important">
+                                <input #genf class="form-check-input" name="gender" [(ngModel)]="customerModel.gender"
+                                    type="radio" value="female" ngModel />
+                                Female
+                                <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 col-form-label">VIP</label>
+                    <label class="switch">
+                        <input type="checkbox" checked class="switch-input" [switch-on-color]="'primary'"
+                            [switch-off-color]="'primary'" id="vip" name="vip" [(ngModel)]="customerModel.vip">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveCustomerDetail(customerModel)"
+                        [disabled]="!CustForm.form.valid">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="!selectCustomer">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h4 class="card-title"> Customer List</h4>
+                        </div>
+                        <div class="ml-md-auto">
+                            <button type="submit" *ngIf="isDashboard" class="btn btn-info btn-round" data-toggle="modal"
+                                data-target="#addCustomerModal">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add Customer
+                            </button>
+                        </div>
+                        <div class="ml-md-auto">
+                            <button type="submit" class="btn btn-info btn-round" routerLink="/purchsed-membership">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Join Membership
+                            </button>
+                        </div>
+                        <div class="ml-md-auto">
+                            <label class="col-form-label" style="margin-top: 5px;font-size: 18px;color: black;">Search
+                                By</label>
+                        </div>
+                        <div class="col-md-3 ml-md-auto">
+                            <div class="form-group" style="margin-top: 8px !important;">
+                                <input type="search" id="form1" class="form-control"
+                                    placeholder="Contact Number & Whatsapp Number" [(ngModel)]="search"
+                                    (keyup)="searchCustomerList($event.target.value)" aria-label="Search" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center"></th>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Customer Name</th>
+                                <!-- <th class="text-center">Contact NO</th> -->
+                                <th class="text-center">Whatsapp No</th>
+                                <th class="text-center">Gender</th>
+                                <th class="text-center">Status</th>
+                                <!-- <th class="text-center">Address</th> -->
+                                <!-- <th class="text-center">Created Date</th> -->
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of customer ; let i = index">
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" name="list_name"
+                                                    (change)="seletedCustomerDetails(item)" type="checkbox" />
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">
+                                        <div class="text-center"><span class="fa fa-star checked"
+                                                *ngIf="item.vip==true"></span> {{ item.fname}} {{ item.lname}}</div>
+                                    </td>
+                                    <!-- <td class="text-center">{{ item.contact }}</td> -->
+                                    <td class="text-center">{{ item.whatsapp }}</td>
+                                    <td class="text-center">{{ item.gender }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-success" *ngIf="item.status==1">
+                                            Active
+                                        </button>
+                                        <button class="btn btn-danger" *ngIf="item.status==0">
+                                            Deactive
+                                        </button>
+                                    </td>
+                                    <!-- <td class="text-center">{{ item.address }}</td> -->
+                                    <!-- <td class="text-center">{{ item.createddate | date }}</td> -->
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                            <i class="fa fa-eye" (click)="onlyViewCustomerDetails(item.id)"></i>
+                                        </button> &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                            <i class="fa fa-edit" data-toggle="modal" data-target="#customerModal"
+                                                (click)="viewCustomerDetails(item)"></i>
+                                        </button> &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeCustomerList(item.id)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls    maxSize="10" autoHide="true"
+                                responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">View/Edit Customer</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-horizontal" name="employeeRegForm" #employeeRegForm="ngForm">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">First Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            [(ngModel)]="customerModel.fname" placeholder=" Enter First Name " />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Last Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="lname" name="lname"
+                                            [(ngModel)]="customerModel.lname" placeholder=" Enter Last Name" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Email</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="email" name="email"
+                                            [(ngModel)]="customerModel.email" placeholder=" Enter Email Address" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Contact Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="contact"
+                                            [(ngModel)]="customerModel.contact" name="contact"
+                                            placeholder="Enter Contact Number" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="whatsapp"
+                                            [(ngModel)]="customerModel.whatsapp" name="whatsapp"
+                                            placeholder="Enter Whatsapp Number" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Address</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <textarea id="address" class="form-control validate" name="address" rows="3"
+                                            cols="40" [(ngModel)]="customerModel.address" placeholder="Enter Address"
+                                            value=""> </textarea>
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-form-label">Select Gender</label>
+                                <div class="col-md-2">
+                                    <div class="form-check-radio">
+                                        <label class="form-check-label" style="color: black !important">
+                                            <input #genm class="form-check-input" name="gender"
+                                                [(ngModel)]="customerModel.gender" type="radio" value="male" ngModel />
+                                            Male
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check-radio">
+                                        <label class="form-check-label" style="color: black !important">
+                                            <input #genf class="form-check-input" name="gender"
+                                                [(ngModel)]="customerModel.gender" type="radio" value="female"
+                                                ngModel />
+                                            Female
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <label class="col-sm-2 col-form-label">VIP</label>
+
+                                <label class="switch">
+                                    <input type="checkbox" checked class="switch-input" id="vip" name="vip"
+                                        [(ngModel)]="customerModel.vip">
+                                    <span class="slider round"></span>
+                                </label>
+
+                                <!-- <label class="col-md-2 col-form-label">Total Points</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="total" name="total"
+                                            placeholder="Total Points" disabled value="{{totalCustomerPoint}}" />
+                                    </div>
+                                </div> -->
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="updateCustomerDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="custAppointment">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Customer Appointment<span class="fa fa-star checked"
+                            *ngIf="customerModel.vip==true"></span> &nbsp;&nbsp;
+                        <span style="color:rgba(255, 217, 0, 0.712)" *ngIf="membersActive==1">(Members)</span>
+
+                    </h4>
+                </div>
+                <div class="ml-md-auto">
+                    <label class="">VIP</label>
+                    <label class="switch">
+                        <input type="checkbox" checked class="switch-input" id="vip" name="vip"
+                            [(ngModel)]="customerModel.vip" (click)="updateCustomerDetails()">
+                        <span class="slider round"></span>
+                    </label>
+                    <!-- <mat-slide-toggle class="example-margin" [color]="color" [(ngModel)]="customerModel.vip"
+                        [checked]="checked" (click)="updateCustomerDetails()" [disabled]="disabled">
+                        Slide me!
+                    </mat-slide-toggle> -->
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="backToCustomer()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="col-form-label">Customer Name</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="customerModel.fname "
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Contact Number</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="customerModel.contact"
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Whatsapp Number</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="customerModel.whatsapp"
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Email Address</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="customerModel.email"
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Gender</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="customerModel.gender"
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Booking Date</label>
+                    <div class="form-group">
+                        <input type="date" [(ngModel)]="appointmentModel.bookingdate" class="form-control"
+                            value="{{ formdate }}" name="bookingdate" id="bookingdate">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Booking Date</label>
+                    <br>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select Booking Time Slot</mat-label>
+                        <mat-select [formControl]="timeControl" required  [(ngModel)]="appointmentModel.timeSlot">
+                            <mat-option>Select Time</mat-option>
+                            <mat-option *ngFor="let bti of bookingTimeInterval" [value]="bti.id" (click)="bookingTimeSelcted(bti.id)">
+                                {{bti.time}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="timeControl.hasError('required')">Please select your time.</mat-error>
+                        <mat-hint>{{timeControl.value?.sound}}</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Combo Offer</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ selectedOffer }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Combo Offer</div>
+                            <div *ngFor="let o of offerList">
+                                <a class="dropdown-item" (click)="selectOfferList(o.id)"
+                                    style="color:#252422 !important">{{o.offername}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" *ngIf="selectedOffer">
+                    <label class="col-form-label">Select Team Member</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ selectedOfferEmpName }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Team Member</div>
+                            <div *ngFor="let e of employeeReg">
+                                <a class="dropdown-item" (click)="selectEmpForOffer(e.id)"
+                                    style="color:#252422 !important">{{e.fname}}
+                                    {{e.lname}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngFor="let add of addService; let ind = index">
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Service</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ add.servicesname }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Service</div>
+                            <div *ngFor="let sl of servicesList">
+                                <a class="dropdown-item" (click)="selectServiceList(sl.id,ind)"
+                                    style="color:#252422 !important">{{sl.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Team Member</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ add.employeename }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Team Member</div>
+                            <div *ngFor="let e of employeeReg">
+                                <a class="dropdown-item" (click)="selectEmpList(e.id,ind)"
+                                    style="color:#252422 !important">{{e.fname}}
+                                    {{e.lname}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <i class="fa fa-plus-circle" aria-hidden="true" (click)="addServiceList(add)"
+                        style="font-size: 33px !important; margin-top: 47% !important"></i>
+                </div>
+                <div class="col-md-1" *ngIf="ind > 0">
+                    <i class="fa fa-times-circle" aria-hidden="true" (click)="removeServiceList(ind)" style="
+                        font-size: 33px !important;
+                        margin-top: 47% !important;
+                        margin-left: -80px !important;
+                      "></i>
+                </div>
+            </div>
+            <div class="table-responsive" *ngIf="membersActive==1">
+                <h3>Membership Services List</h3>
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Service Name</th>
+                        <th class="text-center">Discount</th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Discounted Price</th>
+                        <th class="text-center">No Of Total Services</th>
+                        <th class="text-center">Reedem Services</th>
+
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of activeMembership ">
+                            <td class="text-center">{{ item.index }}</td>
+                            <td class="text-center">{{ item.sname}}</td>
+                            <td class="text-center">{{ item.discount}} %</td>
+                            <td class="text-center">{{ item.tprice}}</td>
+                            <td class="text-center">{{ item.dprice}}</td>
+                            <td class="text-center">{{item.quntity}}</td>
+                            <td class="text-center">
+                                <input type="number" class="form-control" id="quntity" name="quntity"
+                                    [(ngModel)]="item.usedMem" placeholder="Enter Used No Of Services" />
+                            </td>
+                            <!-- <td class="text-center">{{ item.serviceprice }}</td> -->
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round ml5" (click)="saveAppointmentDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" (click)="backToCustomer()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive" *ngIf="selectedOffer">
+                <h3>Combo Offer Services List</h3>
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Services Name</th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Percantage</th>
+                        <th class="text-center">Offer Price</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of offerData; let i = index">
+                            <td class="text-center">{{ i+1 }}</td>
+                            <td class="text-center">{{ item.servicesname}} </td>
+                            <td class="text-center">{{item.totalprice}} ₹</td>
+                            <td class="text-center">{{selctedPer }} %</td>
+                            <td class="text-center">{{ item.offerprice }} ₹</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive" *ngIf="addService.length>0">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Services Name</th>
+                        <th class="text-center">Employee Name</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Point</th>
+                        <th class="text-center">Approx Time</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody *ngIf="addService[0].serpoint !=null ">
+
+                        <tr *ngFor="let item of addService; let i = index">
+                            <td class="text-center">{{ i+1 }}</td>
+                            <td class="text-center">{{ item.servicesname}} </td>
+                            <td class="text-center">{{item.employeename}}</td>
+                            <td class="text-center">{{ item.price }} ₹</td>
+                            <td class="text-center">{{ item.serpoint }}</td>
+                            <td class="text-center">{{ item.time }}</td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeItem(i)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Total Points</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="tPoints" name="tPoints" disabled
+                            value="{{tCustPoint}}" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Enter Points to Redeem </label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="redeemPoint" name="redeemPoint"
+                            [disabled]="tCustPoint ==0 " [(ngModel)]="appointmentModel.redeempoints"
+                            placeholder="Enter Redeem Point" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Total
+                        Price</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname" disabled
+                            value="{{totalPrice}} ₹" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Today
+                        Points</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname" disabled
+                            value="{{totalPoint}} Point" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Approx Time</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname" disabled
+                            value="{{totalTime}} minute" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" *ngIf="customerModel.vip==true">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">VIP Bonus</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="vipbonus" disabled
+                            value="-{{vipbonus}} ₹" />
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="button" class="btn btn-info btn-round ml5"
+                        (click)="generateInvoicePDF(appointmentModel,addService)"><i class="fa fa-file-pdf-o"></i>
+                        Invoice(PDF)</button>
+                    <button type="submit" class="btn btn-info btn-round ml5" (click)="saveAppointmentDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" (click)="backToCustomer()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="card" *ngIf="viewCustomerAllData">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="card-title">Customer Appointment List</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="backToList()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <!-- <th class="text-center">Employee Name</th> -->
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Total Point</th>
+                        <th class="text-center">Appointment Date</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of customerData ">
+                            <td class="text-center">{{ item.index }}</td>
+                            <!-- <td class="text-center">{{ item.empname}}</td> -->
+                            <td class="text-center">{{ item.totalprice }}</td>
+                            <td class="text-center">{{ item.totalpoint }}</td>
+                            <td class="text-center">{{ item.createddate | date }}</td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                    <i class="fa fa-eye" data-toggle="modal" data-target="#customerServicesModal"
+                                        (click)="openUsedServiceList(item)"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true"
+                        (pageChange)="page= $event" autoHide="true" responsive="true">
+                    </pagination-controls>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="customerServicesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Services List</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Service Name</th>
+                                <th class="text-center">Service Price</th>
+                                <th class="text-center">Service Point</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of usedServices">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.servicesname}}</td>
+                                    <td class="text-center">{{ item.price }}</td>
+                                    <td class="text-center">{{ item.point }}</td>
+                                </tr>
+                                <!-- <div class="row">
+                                    <div class="ml-md-auto">
+                                        <pagination-controls id="model_pagination" maxSize="5" directionLinks="true"
+                                            (pageChange)="page= $event" autoHide="true" responsive="true">
+                                        </pagination-controls>
+                                    </div>
+                                </div> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Price</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fname" name="fname" disabled
+                                    value="{{totalPriceForDetails}} ₹" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Points</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="tPoints" name="tPoints" disabled
+                                    value="{{totalPointForDetails}}" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                                <i class="fa fa-times" aria-hidden="true"></i> Close
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Add New Customer</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-horizontal" name="CustForm" #CustForm="ngForm">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">First Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            [(ngModel)]="customerModel.fname" placeholder=" Enter First Name " required
+                                            value="" pattern="^[a-zA-Z]+$"   #fname="ngModel" />
+                                    </div>
+                                    <!-- <div *ngIf="fname.errors && (fname.dirty || fname.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="fname.errors.required">
+                                            First Name is required
+                                        </div>
+                                        <div [hidden]="!fname.errors('pattern')">
+                                            Enter Only Characters.
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <label class="col-md-2 col-form-label">Last Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <input type="text" class="form-control" id="lname" name="lname"
+                                            [(ngModel)]="customerModel.lname" placeholder=" Enter Last Name" required
+                                            value="" pattern="^[a-zA-Z]+$"   #lname="ngModel" />
+                                    </div>
+                                    <!-- <div *ngIf="lname.errors && (lname.dirty || lname.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="lname.errors.required">
+                                            Last Name is required
+                                        </div>
+                                        <div [hidden]="!lname.errors('pattern')">
+                                            Enter Only Characters.
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <label class="col-md-2 col-form-label">Email</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <input type="text" class="form-control" id="email" name="email"
+                                            [(ngModel)]="customerModel.email" placeholder=" Enter Email Address"
+                                            value="" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                                              #email="ngModel" />
+                                    </div>
+                                    <!-- <div *ngIf="email.errors && (email.dirty || email.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="email.errors.required">
+                                            Email Address is required.
+                                        </div>
+                                        <div [hidden]="!email.hasError('pattern')">Email format should be
+                                            <small><b>joe@abc.com</b></small>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <label class="col-md-2 col-form-label">Contact Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <input type="text" class="form-control" id="contact"
+                                            [(ngModel)]="customerModel.contact" name="contact"
+                                            placeholder="Enter Contact Number" required value="" pattern="^[0-9].{9,9}$"
+                                              #contact="ngModel" />
+                                    </div>
+                                    <!-- <div *ngIf="contact.errors && (contact.dirty || contact.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="contact.errors.required">
+                                            contact Address is required.
+                                        </div>
+                                        <div [hidden]="!contact.errors('pattern')">
+                                            Enter Only Numbers.
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <input type="text" class="form-control" id="whatsapp"
+                                            [(ngModel)]="customerModel.whatsapp" name="whatsapp"
+                                            placeholder="Enter Whatsapp Number" required value=""
+                                            pattern="^[0-9].{9,9}$"   #whatsapp="ngModel" />
+                                    </div>
+                                    <!-- <div *ngIf="whatsapp.errors && (whatsapp.dirty || whatsapp.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="whatsapp.errors.required">
+                                            whatsapp Address is required.
+                                        </div>
+                                        <div [hidden]="!whatsapp.errors('pattern')">
+                                            Enter Only Numbers.
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <label class="col-md-2 col-form-label">Address</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <textarea id="address" class="form-control validate" name="address" rows="4"
+                                            cols="40" [(ngModel)]="customerModel.address" placeholder="Enter Address"
+                                            value="" pattern="[#\d+ ([^,]+), ([A-Z]{2}) (\d{5})]"  
+                                            #address="ngModel"> </textarea>
+                                    </div>
+                                    <!-- <div *ngIf="address.errors && (address.dirty || address.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="address.errors.required">
+                                            Address is required
+                                        </div>
+                                        <div [hidden]="!address.errors('pattern')">
+                                            Enter Only Numbers, Characters and Special Charatcters.
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <label class="col-sm-2 col-form-label">Select Gender</label>
+                                <div class="col-md-2">
+                                    <div class="form-check-radio">
+                                        <label class="form-check-label" style="color: black !important">
+                                            <input #genm class="form-check-input" name="gender"
+                                                [(ngModel)]="customerModel.gender" type="radio" value="male" ngModel />
+                                            Male
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check-radio">
+                                        <label class="form-check-label" style="color: black !important">
+                                            <input #genf class="form-check-input" name="gender"
+                                                [(ngModel)]="customerModel.gender" type="radio" value="female"
+                                                ngModel />
+                                            Female
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-form-label">VIP</label>
+
+                                <label class="switch">
+                                    <input type="checkbox" checked class="switch-input" id="vip" name="vip"
+                                        [(ngModel)]="customerModel.vip">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveCustomerDetail()"
+                        [disabled]="!CustForm.form.valid" data-dismiss="modal">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

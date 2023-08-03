@@ -1,0 +1,927 @@
+<div class="main-content">
+    <div class="row" *ngIf="adminRole == 'Customer'">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class=" page-carousel">
+                                <ngb-carousel>
+                                    <ng-template ngbSlide *ngFor="let b of topban">
+                                        <img src="http://31.220.111.153:2300{{b.bannersimage}}"
+                                            style="height:40%;width:100%;" alt="Random first slide">
+                                        <div class="carousel-caption">
+                                        </div>
+                                    </ng-template>
+                                </ngb-carousel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openCustomer()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-user text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Customer</p>
+                                <p class="card-title">Total: {{customerList.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openServices()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-scissors text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Services</p>
+                                <p class="card-title">Total: {{servicesList.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Customer'">
+            <div class="card card-stats" (click)="openCustomerService()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-scissors text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Book Your Appointment</p>
+                                <p class="card-title">Total: {{customerData.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Customer'">
+            <div class="card card-stats" (click)="openServCustom()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-rupee text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Ratecard</p>
+                                <p class="card-title">Total: {{servicesList.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Customer'">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-rupee text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Total Expense</p>
+                                <p class="card-title">Total: {{totalCustExpense}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Customer'">
+            <div class="card card-stats" (click)="openServCustom()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-success">
+                                <i class="fa fa-shopping-cart text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Booked Products</p>
+                                <p class="card-title">Total: 0
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openDaily()">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-inr text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Daily Earnings</p>
+                                <p class="card-title">Total: {{dailytotal}} ₹
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openMonthly()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-inr text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Monthly Earnings</p>
+                                <p class="card-title">Total: {{monthlytotal}} ₹
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openEniquiry()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-question text-danger"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Pending Enquiry</p>
+                                <p class="card-title">Total: {{enquiryList.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openExpenses()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-calculator text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Daily Expenses</p>
+                                <p class="card-title">Total: {{expenseTotal}}₹
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Customer'">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-success">
+                                <i class="fa fa-scissors text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Total Completed Appointments</p>
+                                <p class="card-title">Total: {{customerData.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openOffer()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-gift text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Combo Offer</p>
+                                <p class="card-title">Total: {{offerList.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openPendingOrder()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-gift text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Order Products</p>
+                                <p class="card-title">Total: {{orderList.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Customer'">
+            <div class="card card-stats" (click)="openOffer()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-gift text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">View Offers</p>
+                                <p class="card-title">Total: {{offerList.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngIf="adminRole == 'Admin'">
+            <div class="card card-stats" (click)="openMembership()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-handshake-o text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Purchased Membership</p>
+                                <p class="card-title">Total: {{purchsedMembership.length}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="row" *ngIf="adminRole == 'Admin'">
+        <div class="col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-title">Views</h5>
+                    <p class="card-category">Bar Chart</p>
+                </div>
+                <div class="card-body">
+                    <canvas id="chartViews"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-title">Views</h5>
+                    <p class="card-category">line Chart</p>
+                </div>
+                <div class="card-body">
+                    <canvas id="activeUsers"></canvas>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row" *ngIf="adminRole == 'Admin'">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title"> Active Service List</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Customer Name</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Total Price</th>
+                                <th class="text-center">Payment</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of appointmentList | paginate: { id:'listing',itemsPerPage: 5, currentPage: mpage,totalItems:totalRec }; let i = index">
+
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.fname}} {{ item.lname}} </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-info" *ngIf="item.isactive==true">
+                                            Processing
+                                        </button>
+                                        <button class="btn btn-success" *ngIf="item.isactive==false">
+                                            Completed
+                                        </button>
+                                    </td>
+                                    <td class="text-center" style="color: black; font-weight: 500 !important">{{
+                                        item.totalprice }} ₹
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-success" *ngIf="item.isactive==true" data-toggle="modal"
+                                            data-target="#customerPaymentModal" (click)="modeOfPayment(item)">
+                                            <i class="fa fa-inr" aria-hidden="true"></i> Accept
+                                        </button>
+                                    </td>
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                            <i class="fa fa-eye" data-toggle="modal"
+                                                data-target="#customerServicesModal"
+                                                (click)="openUsedServiceList(item)"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls id="listing" maxSize="5" directionLinks="true"
+                                (pageChange)="mpage= $event" autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title"> Active Employee List</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Employee Name</th>
+                                <th class="text-center">Working State</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of employeeReg ; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.fname}} {{ item.lname}} </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-success btn-round" *ngIf="item.isworking==true"
+                                            (click)="updateEmpProcessingActive(item)">
+                                            Processing
+                                        </button>
+                                        <button class="btn btn-info btn-round" *ngIf="item.isworking==false"
+                                            (click)="updateEmpProcessingDeActive(item)">
+                                            Ideal
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls id="Active_emp_pagination" maxSize="5" directionLinks="true"
+                                (pageChange)="page= $event" autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="adminRole == 'Admin'">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title">Completed Service List</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Customer Name</th>
+                                <th class="text-center">Total Price</th>
+                                <th class="text-center">Bill</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of completedAppointment | paginate: { id:'com_serv_pagination',itemsPerPage: 5, currentPage: cspage,totalItems:totalcompletedService }  let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.fname}} {{ item.lname}} </td>
+                                    <td class="text-center" style="color: black; font-weight: 500 !important">{{
+                                        item.totalprice }} ₹</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-info btn-round"
+                                            (click)="generatecompateappoinmentpdf(item)"><i
+                                                class="fa fa-file-pdf-o"></i>Invoice(PDF)</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls id="com_serv_pagination" maxSize="5" directionLinks="true"
+                                (pageChange)="cspage= $event" autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header" (click)="openEniquiry()">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title">Pending Enquiry List</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" >
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Contact</th>
+                                <th class="text-center">Total Price</th>
+                                <th class="text-center">Total Time</th>
+                                <th class="text-center">Appointment Date</th>
+                                <th class="text-center">Action</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of enquiryList  ">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.fname}} {{ item.lname}} </td>
+                                    <td class="text-center">{{ item.contact }}</td>
+                                    <td class="text-center">{{ item.totalprice }} ₹</td>
+                                    <td class="text-center">{{ item.totaltime }}</td>
+                                    <td class="text-center">{{ item.appointmentdate |date }}</td>
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                            <i class="fa fa-eye" data-toggle="modal" data-target="#customerServicesModal"
+                                                (click)="openUsedServiceList(item)"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls id="enquiry_pagination" maxSize="5" directionLinks="true"
+                                 autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="customerServicesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Services List</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Service Name</th>
+                                <th class="text-center">Assigned Employee</th>
+                                <th class="text-center">Service Price</th>
+                                <th class="text-center">Service Point</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of usedServices ">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.servicesname}}</td>
+                                    <td class="text-center">{{ item.employeename}}</td>
+                                    <td class="text-center">{{ item.price }}</td>
+                                    <td class="text-center">{{ item.point }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="row">
+                            <pagination-controls id="serv_modal_pagination" maxSize="5" directionLinks="true"
+                                (pageChange)="cmpage= $event" autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Price</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fname" name="fname" disabled
+                                    value="{{totalPriceForDetails}} ₹" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Points</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="tPoints" name="tPoints" disabled
+                                    value="{{totalPointForDetails}}" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                                <i class="fa fa-times" aria-hidden="true"></i> Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="customerPaymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <div class="modal-profile ml-auto mr-auto">
+                        <i class="fa fa-inr"></i>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <h3> Select Payment Method</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6>Customer Name: {{cName}} </h6>
+                            <h6>Customer Contact: {{cContact}}</h6>
+                            <h6>Customer Email: {{cEmail}}</h6>
+                            <h6>Customer Point: {{cPoint}}</h6>
+                            <h6>Service Price: {{cPrice}} ₹</h6>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-4"><button class="btn btn-success btn-lg" data-dismiss="modal"
+                                (click)="saveModeOfPaymentDetails('Cash')"><i class="fa fa-money"
+                                    aria-hidden="true"></i> Cash</button>
+                        </div>
+
+                        <div class="col-sm-4"><button class="btn btn-success btn-lg" data-dismiss="modal"
+                                (click)="saveModeOfPaymentDetails('GPay')"><i class="fa-google-pay"
+                                    aria-hidden="true"></i>
+                                GPay</button></div>
+                        <div class="col-sm-4"><button class="btn btn-success btn-lg" data-dismiss="modal"
+                                (click)="saveModeOfPaymentDetails('Account')"><i class="fa fa-bank"
+                                    aria-hidden="true"></i>
+                                Bank AC</button></div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4"><button class="btn btn-info btn-round ml5" data-dismiss="modal"
+                                (click)="generatepdf()"><i class="fa fa-file-pdf-o"></i>
+                                Invoice(PDF)</button>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-link btn-link" data-dismiss="modal"><i class="fa fa-times"
+                            aria-hidden="true"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: -93px;" *ngIf="adminRole == 'Customer'">
+        <app-offer></app-offer>
+    </div>
+    <div class="card" *ngIf="adminRole == 'Customer'">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="card-title">Appointment History</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="openCustomerService()" matTooltip="Info about the action">
+                        <i class="fa fa-calendar" aria-hidden="true"></i> New Appointment
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <!-- <th class="text-center">Employee Name</th> -->
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Total Point</th>
+                        <th class="text-center">Appointment Date</th>
+                        <th class="text-center">Rating</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of customerData ;let i=index">
+                            <td class="text-center">{{ item.index }}</td>
+                            <!-- <td class="text-center">{{ item.empname}}</td> -->
+                            <td class="text-center">{{ item.totalprice }}</td>
+                            <td class="text-center">{{ item.totalpoint }}</td>
+                            <td class="text-center">{{ item.createddate | date }}</td>
+                            <td class="text-center">
+                                <div class="stars text-center">
+                                    <ngx-star-rating [(ngModel)]="item.ratings" (click)="submitServiceRating(item)"
+                                        [id]="'rating'+i">
+                                    </ngx-star-rating>
+                                </div>
+
+                            </td>
+
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                    <i class="fa fa-eye" data-toggle="modal" data-target="#customerServicesModal"
+                                        (click)="openUsedServiceList(item)"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <pagination-controls id="appoint_pagination" maxSize="5" directionLinks="true"
+                         autoHide="true" responsive="true">
+                    </pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="customerServicesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Services List</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Service Name</th>
+                                <th class="text-center">Service Price</th>
+                                <th class="text-center">Service Point</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of usedServices ">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.servicesname}}</td>
+                                    <td class="text-center">{{ item.price }}</td>
+                                    <td class="text-center">{{ item.point }}</td>
+                                </tr>
+                                <!-- <div class="row">
+                                    <div class="ml-md-auto">
+                                        <pagination-controls id="model_pagination" maxSize="5" directionLinks="true"
+                                            (pageChange)="page= $event" autoHide="true" responsive="true">
+                                        </pagination-controls>
+                                    </div>
+                                </div> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Price</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fname" name="fname" disabled
+                                    value="{{totalPriceForDetails}} ₹" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Points</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="tPoints" name="tPoints" disabled
+                                    value="{{totalPointForDetails}}" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                                <i class="fa fa-times" aria-hidden="true"></i> Close
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div style="margin-top: -93px;" *ngIf="adminRole == 'Admin'">
+    <app-customer></app-customer>
+</div>

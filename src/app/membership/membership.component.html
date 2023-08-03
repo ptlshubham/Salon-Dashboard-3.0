@@ -1,0 +1,414 @@
+<div class="main-content">
+
+    <!-- update modal start -->
+    <div class="modal fade" id="membershipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">View/Edit Membership</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="col-form-label">Membership Package Name</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="editMemberName" [(ngModel)]="membershipModel.membershipname"
+                                    name="editMemberName" />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="row" *ngFor="let add of addService; let ind = index">
+                        <div class="col-md-4">
+                            <label class="col-form-label">Select Service</label>
+                            <div class="dropdown form-group">
+                                <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="margin: 0px 0px !important;">
+                                    {{ add.selectedServ }}
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-header">Select Service</div>
+                                    <div *ngFor="let sl of servicesList">
+                                        <a class="dropdown-item" (click)="selectServiceList(sl.id,ind)"
+                                            style="color:#252422 !important">{{sl.name}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-md-1">
+                            <i class="fa fa-plus-circle" aria-hidden="true" (click)="addServiceList(add)"
+                                style="font-size: 33px !important; margin-top: 47% !important"></i>
+                        </div>
+                        <div class="col-md-1" *ngIf="ind > 0">
+                            <i class="fa fa-times-circle" aria-hidden="true" (click)="removeServiceList(ind)" style="
+                                font-size: 33px !important;
+                                margin-top: 47% !important;
+                                margin-left: -80px !important;
+                              "></i>
+                        </div>
+                    </div>
+        
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Services Name</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Number Of Services</th>
+                                <th class="text-center">Total Price</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody *ngIf="addService[0].serpoint !=null">
+                                <tr *ngFor="let item of addService; let i = index">
+                                    <td class="text-center">{{ i+1 }}</td>
+                                    <td class="text-center">{{ item.selectedServ}} </td>
+                                    <td class="text-center">{{ item.serprice }} ₹</td>
+                                    <div class="col-md-11">
+                                        <label class="col-form-label" style="font-size: 20px;color: black;"></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="quantity" name="quantity"
+                                                (focusout)="UpdatePricesTotal(item,i)"  value="{{item.quantity}} " [(ngModel)]="item.quantity"
+                                                placeholder="Enter Quantity" />
+                                        </div>
+                                    </div>
+                                    <td class="text-center">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="fname" name="fname" disabled
+                                                value="{{item.finalprice}} ₹" [(ngModel)]="item.finalprice" />
+                                        </div>
+                                    </td>
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeItem(i)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+        
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 20px;color: black;">Total
+                                Price</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="edittotalprice" name="edittotalprice"
+                                    value="{{membershipModel.totalprice}} ₹" [(ngModel)]="membershipModel.totalprice" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="col-form-label" style="font-size: 20px;color: black;">Membership Percentage </label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="percentage" name="percentage"
+                                    (focusout)="UpdatePricesTotalbyPercentage()"
+                                    [(ngModel)]="membershipModel.membershipdiscount" placeholder="Enter Percentage" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 20px;color: black;">Membership Price
+                            </label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="editmembershipprice" name="editmembershipprice" disabled
+                                    value="{{membershipModel.membershipprice}} ₹"
+                                    [(ngModel)]="membershipModel.membershipprice" />
+                            </div>
+                        </div>
+        
+                    </div>
+                    <br>
+                    
+        
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="updateMembershipDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- update modal end -->
+    <!-- membership add start -->
+    <div class="card" *ngIf="custAppointment">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Add New Membership Package</h4>
+                </div>
+                <div class="ml-md-auto">
+
+                    <!-- <button type="cancel" class="btn btn-danger btn-round" (click)="backToOffer()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button> -->
+                    <button type="cancel" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="col-form-label">Membership Package Name</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="membershipModel.membershipname"
+                            name="fname" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngFor="let add of addService; let ind = index">
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Service</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ add.selectedServ }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Service</div>
+                            <div *ngFor="let sl of servicesList">
+                                <a class="dropdown-item" (click)="selectServiceList(sl.id,ind)"
+                                    style="color:#252422 !important">{{sl.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <i class="fa fa-plus-circle" aria-hidden="true" (click)="addServiceList(add)"
+                        style="font-size: 33px !important; margin-top: 47% !important"></i>
+                </div>
+                <div class="col-md-1" *ngIf="ind > 0">
+                    <i class="fa fa-times-circle" aria-hidden="true" (click)="removeServiceList(ind)" style="
+                        font-size: 33px !important;
+                        margin-top: 47% !important;
+                        margin-left: -80px !important;
+                      "></i>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Services Name</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Number Of Services</th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody *ngIf="addService[0].serpoint !=null">
+                        <tr *ngFor="let item of addService; let i = index">
+                            <td class="text-center">{{ i+1 }}</td>
+                            <td class="text-center">{{ item.selectedServ}} </td>
+                            <td class="text-center">{{ item.serprice }} ₹</td>
+                            <div class="col-md-11">
+                                <label class="col-form-label" style="font-size: 20px;color: black;"></label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="quantity" name="quantity"
+                                        (focusout)="UpdatePricesTotal(item,i)" [(ngModel)]="item.quantity"
+                                        placeholder="Enter Quantity" />
+                                </div>
+                            </div>
+                            <td class="text-center">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="fname" name="fname" disabled
+                                        value="{{item.finalprice}} ₹" [(ngModel)]="item.finalprice" />
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeItem(i)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Total
+                        Price</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname"
+                            value="{{membershipModel.totalprice}} ₹" [(ngModel)]="membershipModel.totalprice" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Membership Percentage </label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="percentage" name="percentage"
+                            (focusout)="UpdatePricesTotalbyPercentage()"
+                            [(ngModel)]="membershipModel.membershipdiscount" placeholder="Enter Percentage" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Membership Price
+                    </label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname" disabled
+                            value="{{membershipModel.membershipprice}} ₹"
+                            [(ngModel)]="membershipModel.membershipprice" />
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="ml-md-auto">
+                    <!-- <button type="button" class="btn btn-info btn-round ml5" (click)="generateInvoicePDF()"><i
+                            class="fa fa-file-pdf-o"></i>
+                        Invoice(PDF)</button> -->
+                    <button type="submit" class="btn btn-info btn-round ml5"
+                        (click)="saveMembershipDetail(membershipModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" (click)="backToMembership()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- membership add End -->
+    <!-- membership List start -->
+    <div class="row" *ngIf="!selectMembership">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-title"> Membership Package List</h4>
+                        </div>
+
+                        <div class="ml-md-auto">
+                            <label class="col-form-label" style="margin-top: 5px;font-size: 18px;color: black;">Search
+                                By</label>
+                        </div>
+                        <div class="col-md-3 ml-md-auto">
+                            <div class="form-group" style="margin-top: 8px !important;">
+                                <input type="search" id="form1" class="form-control" placeholder="Membership Name"
+                                    [(ngModel)]="search" (keyup)="searchMembershipList($event.target.value)"
+                                    aria-label="Search" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Membership Package Name</th>
+                                <th class="text-center">Membership Price</th>
+                                <th class="text-center">Total Price</th>
+                                <th class="text-center"> Membership Discount</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of membership | paginate: { itemsPerPage: 10   }; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.membershipname }}</td>
+                                    <td class="text-center">{{ item.membershipprice }} ₹</td>
+                                    <td class="text-center">{{ item.totalprice }} ₹</td>
+                                    <td class="text-center">{{ item.membershipdiscount}} %</td>
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm"
+                                            data-toggle="modal" data-target="#membershipServicesModal"
+                                            (click)="onlyViewMembershipDetails(item.id)">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm"
+                                            data-toggle="modal" data-target="#membershipModal"
+                                            (click)="viewMembershipDetails(item)">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeMembershipList(item.id)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls    maxSize="10" autoHide="true"
+                                responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- membership list End -->
+    <div class="modal fade" id="membershipServicesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Membership Services List</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Service Name</th>
+                                <th class="text-center">Service Price</th>
+                                <th class="text-center">No Of Services</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of usedServices |  paginate: { id:'model_pagination',itemsPerPage: 10, currentPage: modelPage,totalItems:totalModelRecords }">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.servicesname}}</td>
+                                    <td class="text-center">{{ item.serviceprice }}</td>
+                                    <td class="text-center">{{ item.quantity}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

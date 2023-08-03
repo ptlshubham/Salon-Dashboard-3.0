@@ -1,0 +1,323 @@
+<div class="main-content">
+    <div class="row" *ngIf="showVen">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-title"> Vendor List</h4>
+                        </div>
+                        <div class="ml-md-auto">
+                            <button type="cancel" class="btn btn-danger btn-round" routerLink="/dashboard">
+                                <i class="fa fa-arrow-left"></i> Back
+                            </button>
+                            <button type="Add" class="btn btn-info btn-round" (click)="addVendor()">
+                                <i class="fa fa-plus"></i> Add Vendor
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Vendor Name</th>
+                                <th class="text-center">Contact NO</th>
+                                <th class="text-center">Address</th>
+                                <th class="text-center">GSTIN NO</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of vendorReg | paginate: { itemsPerPage: 10   }; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.fname}} </td>
+                                    <td class="text-center">{{ item.contact }}</td>
+                                    <td class="text-center">{{ item.address }} ,<br>{{item.city}}</td>
+                                    <td class="text-center">{{ item.gst }}</td>
+                                    <td class="text-right">
+                                        
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                            <i class="fa fa-edit" data-toggle="modal" data-target="#vendorModal"
+                                                (click)="viewVenDetails(item)"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeVendor(item.id)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls    maxSize="10" autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="vendorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">View/Edit Vendor</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-horizontal" name="vendorRegForm" #vendorRegForm="ngForm">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Company Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            [(ngModel)]="updateVendorModel.fname" placeholder=" Enter Company Name " />
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 col-form-label">GSTIN NO</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="gst"
+                                            [(ngModel)]="updateVendorModel.gst" name="gst"
+                                            placeholder="Enter GSTIN NO" />
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 col-form-label">Contact Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="contact"
+                                            [(ngModel)]="updateVendorModel.contact" name="contact"
+                                            placeholder="Enter Contact Number" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="whatsapp"
+                                            [(ngModel)]="updateVendorModel.whatsapp" name="whatsapp"
+                                            placeholder="Enter Whatsapp Number" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Address</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <textarea id="address" name="address" rows="3" cols="40"
+                                            [(ngModel)]="updateVendorModel.address"
+                                            placeholder="Enter Address"> </textarea>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">City</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="city"
+                                            [(ngModel)]="updateVendorModel.city" name="city"
+                                            placeholder="Enter City" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Pincode</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="pincode"
+                                            [(ngModel)]="updateVendorModel.pincode" name="pincode"
+                                            placeholder="Enter Pincode" />
+                                    </div>
+                                </div>
+                                
+                                <!-- <label class="col-md-2 col-form-label">Select Services</label>
+                                <div class="col-md-4">
+                                    <div class="btn-group bootstrap-select w-100">
+                                        <div style="border: 1px #DDDDDD solid !important">
+                                            <angular2-multiselect [ngModelOptions]="{standalone: true}"
+                                                [data]="serviceData" [(ngModel)]="selectedServices"
+                                                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                                                (onDeSelect)="OnItemDeSelect($event)"
+                                                (onSelectAll)="onSelectAll($event)" name="items"
+                                                (onDeSelectAll)="onDeSelectAll($event)">
+                                            </angular2-multiselect>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="updateVendorDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" *ngIf="addVen">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Add Vendor</h4>
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="closeVenForm()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" name="vendorRegForm" #vendorRegForm="ngForm">
+                <div class="row">
+                    <label class="col-md-2 col-form-label">Company Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="fname" name="fname"
+                                [(ngModel)]="vendorModel.fname" placeholder=" Enter Company Name " required value=""
+                                pattern="^[a-zA-Z]+$"   #fname="ngModel" />
+                        </div>
+                        <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class="alert alert-danger">
+                            <div *ngIf="fname.errors.required">
+                                Company Name is required
+                            </div>
+                            <div [hidden]="!fname.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">GSTIN Numner</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="lname" name="lname"
+                                [(ngModel)]="vendorModel.gst" placeholder=" Enter GSTIN number" required value=""
+                                pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"   #gst="ngModel" />
+                        </div>
+                        <div *ngIf="gst.errors && (gst.dirty || gst.touched)" class="alert alert-danger">
+                            <div *ngIf="gst.errors.required">
+                                GSTIN Number is required
+                            </div>
+                            <div [hidden]="!gst.errors('pattern')">
+                                Enter according format.
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <label class="col-md-2 col-form-label">Contact Number</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="contact" [(ngModel)]="vendorModel.contact"
+                                name="contact" placeholder="Enter Contact Number" required value=""
+                                pattern="^[0-9].{9,9}$"   #contact="ngModel" />
+                        </div>
+                        <div *ngIf="contact.errors && (contact.dirty || contact.touched)" class="alert alert-danger">
+                            <div *ngIf="contact.errors.required">
+                                Contact Number is required
+                            </div>
+                            <div [hidden]="!contact.errors('pattern')">
+                                Enter Only Number.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="whatsapp" [(ngModel)]="vendorModel.whatsapp"
+                                name="whatsapp" placeholder="Enter Whatsapp Number" required value=""
+                                pattern="^[0-9].{9,9}$"   #whatsapp="ngModel" />
+                        </div>
+                        <div *ngIf="whatsapp.errors && (whatsapp.dirty || whatsapp.touched)" class="alert alert-danger">
+                            <div *ngIf="whatsapp.errors.required">
+                                Whatsapp Number is required
+                            </div>
+                            <div [hidden]="!whatsapp.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Address</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <textarea id="address" name="address" rows="4" cols="54" [(ngModel)]="vendorModel.address"
+                                placeholder="Enter Address" required value="" pattern="[#\d+ ([^,]+), ([A-Z]{2}) (\d{5})]"
+                                  #address="ngModel"  class="form-control"> </textarea>
+                        </div>
+                        <div *ngIf="address.errors && (address.dirty || address.touched)" class="alert alert-danger">
+                            <div *ngIf="address.errors.required">
+                                Address is required
+                            </div>
+                            <div [hidden]="!address.errors('pattern')">
+                                Enter Only Numbers, Characters and Special Charatcters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">City</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="city" [(ngModel)]="vendorModel.city"
+                                name="city" placeholder="Enter City" required value="" pattern="^[a-zA-Z]+$"
+                                  #city="ngModel" />
+                        </div>
+                        <div *ngIf="city.errors && (city.dirty || city.touched)" class="alert alert-danger">
+                            <div *ngIf="city.errors.required">
+                                City Name is required
+                            </div>
+                            <div [hidden]="!city.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Pincode</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="pincode" [(ngModel)]="vendorModel.pincode"
+                                name="pincode" placeholder="Enter Pincode" required value="" pattern="^[1-9][0-9]{5}$"
+                                  #pincode="ngModel" />
+                        </div>
+                        <div *ngIf="pincode.errors && (pincode.dirty || pincode.touched)" class="alert alert-danger">
+                            <div *ngIf="pincode.errors.required">
+                                Pincode is required
+                            </div>
+                            <div [hidden]="!pincode.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                      </div>
+
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round" [disabled]="!vendorRegForm.form.valid"
+                        (click)="saveVendorDetail(vendorModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" (click)="closeVenForm()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

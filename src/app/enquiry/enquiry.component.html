@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-title">Enquiry List</h4>
+                        </div>
+                        <!-- <div class="ml-md-auto">
+                            <button type="Add" class="btn btn-info btn-round" >
+                                <i class="fa fa-plus"></i> Add Employee
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Contact</th>
+                                <th class="text-center">Employee Name</th>
+                                <th class="text-center">Services</th>
+                                <th class="text-center">Certification</th>
+                                <th class="text-center">Time</th>
+                                <th class="text-center">Service Date</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of enquiryList | paginate: { itemsPerPage: 5   }; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.name}} </td>
+                                    <td class="text-center">{{ item.contact }}</td>
+                                    <td class="text-center">{{ item.emp}} </td>
+                                    <td class="text-center">{{ item.service }},{{item.service1}}</td>
+                                    <td class="text-center">{{ item.certification }}</td>
+                                    <td class="text-center">{{ item.time }}</td>
+                                    <td class="text-center">{{ item.Createddate }}</td>
+
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm"
+                                            *ngIf="item.isactive==true">
+                                            <i class="fa fa-check" (click)="updateEnquiryStatus(item.id)"></i>
+                                        </button>
+                                        <button class="btn btn-success" *ngIf="item.isactive==false">
+                                            Confirmed !
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeEmployee(item.id)" *ngIf="item.isactive==true">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls    autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

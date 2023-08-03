@@ -1,0 +1,756 @@
+<div class="main-content">
+    <div class="card" *ngIf="addProduct">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Add Products</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" name="servicesRegForm" #servicesRegForm="ngForm">
+                <div class="row ">
+
+                    <label class="col-md-2 col-form-label">Product Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input placeholder="Enter name" [(ngModel)]="productsModel.name" id="name" name="name"
+                                type="text" class="form-control validate" [ngModelOptions]="{standalone: true}"
+                                required="" #name="ngModel">
+                        </div>
+
+                    </div>
+                    <label class="col-md-2 col-form-label">Category</label>
+                    <div class="col-md-4">
+                        <div class="dropdown form-group">
+                            <button class="dropdown-toggle btn btn-primary btn-round btn-block" type="button"
+                                name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                {{ selectedName }}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-header">Select Category</div>
+                                <div *ngFor="let pos of CategoryList">
+                                    <a class="dropdown-item" (click)="selectedCategory(pos.id)">{{pos.name}}</a>
+                                </div>
+                                <a data-target="#exampleModal" data-toggle="modal" class="dropdown-item"><i
+                                        class="fa fa-plus" aria-hidden="true"> Add Category</i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <i class="nc-icon nc-simple-remove"></i>
+                                    </button>
+                                    <h5 class="modal-title" id="exampleModalLabel">ADD CATEGORY</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" name="servicesRegForm" #servicesRegForm="ngForm">
+                                        <div class="row">
+                                            <label class="col-md-4 col-form-label">Category Name</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" [(ngModel)]="categoryModel.name"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    placeholder="Enter Category Name" #name="ngModel">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" (click)="saveCategoryDetail()"
+                                        data-dismiss="modal">Add category</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Price</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input placeholder="Enter Price" [(ngModel)]="productsModel.price" id="expire_date"
+                                name="expire_date" type="number" [ngModelOptions]="{standalone: true}"
+                                class="form-control validate hasDatepicker" data-large-mode="true" #price="ngModel">
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Vendor's Name</label>
+                    <div class="col-md-4">
+                        <div class="dropdown form-group">
+                            <button class="dropdown-toggle btn btn-primary btn-round btn-block" type="button"
+                                name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                {{ selectvendor }}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-header">Select vendor</div>
+                                <div *ngFor="let pos of VendorList">
+                                    <a class="dropdown-item" (click)="selectedVendor(pos.id)">{{pos.fname}}</a>
+                                </div>
+                                <a data-target="#exampleModal1" data-toggle="modal" class="dropdown-item"><i
+                                        class="fa fa-plus" aria-hidden="true"> Add Vendor</i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-notice" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <i class="nc-icon nc-simple-remove"></i>
+                                    </button>
+                                    <h5 class="modal-title" id="exampleModalLabel">ADD VENDOR</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" name="vendorRegForm" #vendorRegForm="ngForm">
+                                        <div class="row">
+                                            <label class="col-md-2 col-form-label">Company Name</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     >
+                                                    <input type="text" class="form-control" id="fname" name="fname"
+                                                        [(ngModel)]="vendorModel.fname"
+                                                        placeholder=" Enter Company Name " required value=""
+                                                        pattern="^[a-zA-Z]+$"   #fname="ngModel" />
+                                                </div>
+                                                <div *ngIf="fname.errors && (fname.dirty || fname.touched)"
+                                                    class="alert alert-danger">
+                                                    <div *ngIf="fname.errors.required">
+                                                        Company Name is required
+                                                    </div>
+                                                    <div [hidden]="!fname.errors('pattern')">
+                                                        Enter Only Characters.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-md-2 col-form-label">GSTIN Numner</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     >
+                                                    <input type="text" class="form-control" id="lname" name="lname"
+                                                        [(ngModel)]="vendorModel.gst" placeholder=" Enter GSTIN number"
+                                                        required value=""
+                                                        pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
+                                                          #gst="ngModel" />
+                                                </div>
+                                                <div *ngIf="gst.errors && (gst.dirty || gst.touched)"
+                                                    class="alert alert-danger">
+                                                    <div *ngIf="gst.errors.required">
+                                                        GSTIN Number is required
+                                                    </div>
+                                                    <div [hidden]="!gst.errors('pattern')">
+                                                        Enter according format.
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <label class="col-md-2 col-form-label">Contact Number</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     >
+                                                    <input type="text" class="form-control" id="contact"
+                                                        [(ngModel)]="vendorModel.contact" name="contact"
+                                                        placeholder="Enter Contact Number" required value=""
+                                                        pattern="^[0-9].{9,9}$"  
+                                                        #contact="ngModel" />
+                                                </div>
+                                                <div *ngIf="contact.errors && (contact.dirty || contact.touched)"
+                                                    class="alert alert-danger">
+                                                    <div *ngIf="contact.errors.required">
+                                                        Contact Number is required
+                                                    </div>
+                                                    <div [hidden]="!contact.errors('pattern')">
+                                                        Enter Only Number.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     >
+                                                    <input type="text" class="form-control" id="whatsapp"
+                                                        [(ngModel)]="vendorModel.whatsapp" name="whatsapp"
+                                                        placeholder="Enter Whatsapp Number" required value=""
+                                                        pattern="^[0-9].{9,9}$"  
+                                                        #whatsapp="ngModel" />
+                                                </div>
+                                                <div *ngIf="whatsapp.errors && (whatsapp.dirty || whatsapp.touched)"
+                                                    class="alert alert-danger">
+                                                    <div *ngIf="whatsapp.errors.required">
+                                                        Whatsapp Number is required
+                                                    </div>
+                                                    <div [hidden]="!whatsapp.errors('pattern')">
+                                                        Enter Only Numbers.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-md-2 col-form-label">Address</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     >
+                                                    <textarea id="address" name="address" rows="4" cols="54"
+                                                        [(ngModel)]="vendorModel.address" placeholder="Enter Address"
+                                                        required value="" pattern="[#\d+ ([^,]+), ([A-Z]{2}) (\d{5})]"
+                                                          #address="ngModel"
+                                                        class="form-control"> </textarea>
+                                                </div>
+                                                <div *ngIf="address.errors && (address.dirty || address.touched)"
+                                                    class="alert alert-danger">
+                                                    <div *ngIf="address.errors.required">
+                                                        Address is required
+                                                    </div>
+                                                    <div [hidden]="!address.errors('pattern')">
+                                                        Enter Only Numbers, Characters and Special Charatcters.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-md-2 col-form-label">City</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     >
+                                                    <input type="text" class="form-control" id="city"
+                                                        [(ngModel)]="vendorModel.city" name="city"
+                                                        placeholder="Enter City" required value="" pattern="^[a-zA-Z]+$"
+                                                          #city="ngModel" />
+                                                </div>
+                                                <div *ngIf="city.errors && (city.dirty || city.touched)"
+                                                    class="alert alert-danger">
+                                                    <div *ngIf="city.errors.required">
+                                                        City Name is required
+                                                    </div>
+                                                    <div [hidden]="!city.errors('pattern')">
+                                                        Enter Only Characters.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-md-2 col-form-label">Pincode</label>
+                                            <div class="col-md-4">
+                                                <div class="form-group"
+                                                     >
+                                                    <input type="text" class="form-control" id="pincode"
+                                                        [(ngModel)]="vendorModel.pincode" name="pincode"
+                                                        placeholder="Enter Pincode" required value=""
+                                                        pattern="^[1-9][0-9]{5}$"  
+                                                        #pincode="ngModel" />
+                                                </div>
+                                                <div *ngIf="pincode.errors && (pincode.dirty || pincode.touched)"
+                                                    class="alert alert-danger">
+                                                    <div *ngIf="pincode.errors.required">
+                                                        Pincode is required
+                                                    </div>
+                                                    <div [hidden]="!pincode.errors('pattern')">
+                                                        Enter Only Numbers.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" (click)="saveVendorDetail()"
+                                        data-dismiss="modal">Add Vendor</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4"> -->
+
+                    <!-- </div> -->
+                    <label class="col-md-2 col-form-label">Vendor's Contact</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input placeholder="Enter Vendor's contact" [(ngModel)]="VendorList.contact" id="Phone"
+                                name="Phone" type="tel" maxlength="10" disabled value="{{selectedContact}}"
+                                class="form-control validate" required="" [ngModelOptions]="{standalone: true}"
+                                #vendorcontact="ngModel">
+                        </div>
+                    </div>
+
+                    <label class="col-md-2 col-form-label">Quantity</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input placeholder="Enter Quantity" [(ngModel)]="productsModel.quantity" id="stock"
+                                name="stock" type="number" [ngModelOptions]="{standalone: true}"
+                                class="form-control validate" required="" #quantity="ngModel">
+                        </div>
+                    </div>
+
+                    <label class="col-md-2 col-form-label">Date of Purchase</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="date" [(ngModel)]="productsModel.purchasedate" class="form-control"
+                                value="{{ formdate }}" name="purchasedate" id="purchasedate">
+                        </div>
+                    </div>
+
+                    <label class="col-md-2 col-form-label">Description</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+
+                            <textarea placeholder="Write about Product... " [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="productsModel.descripition" class="form-control validate" rows="7"
+                                required="" #descripition="ngModel"></textarea>
+                        </div>
+                        <label class="col-sm-2 col-form-label">Show products to customers</label>
+                        <label class="switch">
+                            <br><input type="checkbox" checked class="switch-input" [switch-on-color]="'primary'"
+                                [switch-off-color]="'primary'" id="vip" name="vip" [(ngModel)]="productsModel.display">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <label class="col-md-2 col-form-label">Product Image</label>
+                    <div class="col-md-3">
+                        <p class="card-title">Select Product Image</p>
+                        <span style="color: red;">*Image size must be 500X500</span>
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail">
+                                <img src="./assets/img/image_placeholder.jpg" alt="...">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                            <div>
+                                <span class="btn btn-rose btn-round btn-file">
+                                    <span class="fileinput-new">Select Product image</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" id="image" name="image" [(ngModel)]="productsModel.image"
+                                        (change)="select($event)" />
+                                </span>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-round fileinput-exists"
+                                    data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="card-title">Select Product Detail Image</p>
+                        <span style="color: red;">*Image size must be 500X500</span>
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail">
+                                <img src="./assets/img/image_placeholder.jpg" alt="...">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                            <div>
+                                <span class="btn btn-rose btn-round btn-file">
+                                    <span class="fileinput-new">Select Detail Image</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" id="listimages" name="listimages"
+                                        [(ngModel)]="productsModel.listimages" (change)="onSelect($event)" />
+                                </span>
+                                <a href="javascript:void(0)" (click)="removeOrChangedImage()"
+                                    class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
+                                        class="fa fa-times"></i> Remove</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" *ngFor="let i of addingprdtimg;let ind=index">
+                        <p class="card-title">Select Product Detail Image</p>
+                        <span style="color: red;">*Image size must be 500x500</span>
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+
+                            <div class="fileinput-new thumbnail">
+
+                                <img src="./assets/img/image_placeholder.jpg" alt="...">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                            <div>
+                                <span class="btn btn-rose btn-round btn-file">
+                                    <span class="fileinput-new">Select Detail Image</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" id="listimages" name="listimages"
+                                        [(ngModel)]="productsModel.listimages" value={} (change)="onSelect($event)" />
+
+                                </span>
+                                <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"
+                                    (click)="removeOrChangedImage(id)"><i class="fa fa-times"></i> Remove</a>
+
+                                <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeImageUploader(ind)"
+                                    style="font-size:25px!important;padding-left:9px!important"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fa fa-plus-circle" aria-hidden="true"
+                            style="font-size: 50px !important;margin-top:130%!important;"
+                            (click)="addImageUploader()"></i>
+                        <!-- <i class="nc-icon nc-simple-add" style="font-size: 50px !important;
+                                color: aqua;"></i> -->
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveProductsDetail()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="showList">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="card-title"> Product List</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <label class="col-form-label" style="margin-top: 5px;font-size: 18px;color: black;">Search
+                        By</label>
+                </div>
+                <div class="col-md-3 ml-md-auto">
+                    <div class="form-group" style="margin-top: 8px !important;">
+                        <input type="search" id="form1" class="form-control" placeholder="Product Name && Category"
+                            [(ngModel)]="search" (ngModelChange)="Search()" aria-label="Search" />
+                    </div>
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="Add" class="btn btn-info btn-round" (click)="addcategory()">
+                        <i class="fa fa-plus"></i> Add Category
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="text-primary">
+                        <th class="text-left">
+                            Product Image
+                        </th>
+                        <th class="text-center">
+                            Product Name
+                        </th>
+                        <th class="text-center">
+                            Category
+                        </th>
+                        <th class="text-center">
+                            Date of Purchase
+                        </th>
+                        <th class="text-center">
+                            Qty
+                        </th>
+                        <th class="text-center">
+                            Price
+                        </th>
+                        <th class="text-center">
+                            Display
+                        </th>
+                        <th class="text-center">
+                            Amount
+                        </th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of productsReg  | paginate: { itemsPerPage: 10   };">
+
+
+                            <td>
+                                <div class="img-container"
+                                    style="width: 120px;max-height: 160px;overflow: hidden;display: block;">
+                                    <img src="http://31.220.111.153:2300{{item.image}}">
+                                </div>
+                            </td>
+                            <td class="text-center">{{ item.name }}
+                            </td>
+                            <td class="text-center">{{ item.category}} </td>
+                            <td class="text-center">{{ item.purchasedate | date }}</td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td class="text-center">{{ item.price }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-success" *ngIf="item.display==true">
+                                    Yes
+                                </button>
+                                <button class="btn btn-danger" hidden *ngIf="item.display==false">
+                                    NO
+                                </button>
+                            </td>
+                            <td class="text-center">{{ item.price * item.quantity }}</td>
+                            <td class="text-right">
+                                <!-- <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                    <i class="fa fa-eye" (click)="onlyViewCustomerDetails(item.id)"></i>
+                                </button>
+                                &nbsp; -->
+                                <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                    <i class="fa fa-edit" data-toggle="modal" data-target="#employeeModal"
+                                        (click)="viewProDetails(item)"></i>
+                                </button>
+                                &nbsp;
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeProductList(item.id)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="ml-md-auto">
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">View/Edit Products</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-horizontal" name="employeeRegForm" #employeeRegForm="ngForm">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Product Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            [(ngModel)]="updateProductModel.name" placeholder=" Enter Product Name " />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Category</label>
+                                <div class="col-md-4">
+                                    <div class="dropdown form-group">
+                                        <button class="dropdown-toggle btn btn-primary btn-round btn-block"
+                                            type="button" name="dropdownMenuButton" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ selectedName }}
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                            aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-header">Select Category</div>
+                                            <div *ngFor="let pos of CategoryList">
+                                                <a class="dropdown-item"
+                                                    (click)="selectedCategory(pos.id)">{{pos.name}}</a>
+                                            </div>
+                                            <a data-target="#exampleModal" data-toggle="modal" class="dropdown-item"><i
+                                                    class="fa fa-plus" aria-hidden="true" data-dismiss="modal"> Add
+                                                    Category</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Vendor's Name</label>
+                                <div class="col-md-4">
+                                    <div class="dropdown form-group">
+                                        <button class="dropdown-toggle btn btn-primary btn-round btn-block"
+                                            type="button" name="dropdownMenuButton" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ selectvendor }}
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                            aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-header">Select vendor</div>
+                                            <div *ngFor="let pos of VendorList">
+                                                <a class="dropdown-item"
+                                                    (click)="selectedVendor(pos.id)">{{pos.fname}}</a>
+                                            </div>
+                                            <a data-target="#exampleModal1" data-toggle="modal" class="dropdown-item"><i
+                                                    class="fa fa-plus" aria-hidden="true" data-dismiss="modal" > Add Vendor</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Quantity</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="quantity" name="quantity"
+                                            [(ngModel)]="updateProductModel.quantity"
+                                            placeholder=" Enter Quantity " />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Description</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <textarea id="descripition" name="descripition" rows="3" cols="40"
+                                        [(ngModel)]="updateProductModel.descripition"
+                                            placeholder="Enter Description"> </textarea>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Date of Purchase</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="date" [(ngModel)]="updateProductModel.purchasedate"
+                                            class="form-control" value="{{ formdate }}" name="purchasedate"
+                                            id="purchasedate">
+                                    </div>
+                                </div>
+                                
+                                <label class="col-md-2 col-form-label">Price</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="city"
+                                            [(ngModel)]="updateProductModel.price" name="city"
+                                            placeholder="Enter Price" />
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-form-label">Show Products to customers</label>
+
+                                <label class="switch">
+                                    <input type="checkbox" checked class="switch-input" id="vip" name="vip"
+                                        [(ngModel)]="updateProductModel.display">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="UpdateProductDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="openCategoryFlag">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <h4 class="card-title">Add Category</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="backToProduct()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="card-body">
+                <form class="form-horizontal" name="servicesRegForm" #servicesRegForm="ngForm">
+                    <div class="row">
+                        <label class="col-md-2 col-form-label">Enter Category Name</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" [(ngModel)]="categoryModel.name"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter name" #name="ngModel">
+                        </div>
+
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="card-footer">
+
+                <button type="submit" class="btn btn-info btn-round pull-right" style="margin-bottom:20px ;"
+                    (click)="saveCategoryDetail()">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="card" *ngIf="showCategoryList">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="text-primary">
+                        <th class="text-center">
+                            Id
+                        </th>
+                        <th class="text-center">
+                            Name
+                        </th>
+                        <th class="text-center">
+                            Date created
+                        </th>
+
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of CategoryList |  paginate: { itemsPerPage: 10   }; let i = index">
+
+                            <td class="text-center">{{ item.index}}</td>
+                            <td class="text-center">{{ item.name }}</td>
+                            <td class="text-center">{{ item.createddate|date }}</td>
+                            <td class="text-right">
+
+                                <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                    <i class="fa fa-edit" data-toggle="modal" data-target="#CategoryModal"
+                                        (click)="viewCategoryDetails(item)"></i>
+                                </button>
+                                &nbsp;
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeCategoryList(item.id)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <pagination-controls    maxSize="10" autoHide="true" responsive="true">
+                    </pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md modal-notice">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="nc-icon nc-simple-remove"></i>
+                </button>
+                <h5 class="modal-title" id="myModalLabel">View/Edit Category</h5>
+            </div>
+            <div class="modal-body">
+                <div class="instruction">
+                    <form class="form-horizontal" name="employeeRegForm" #employeeRegForm="ngForm">
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Product Name</label>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="fname" name="fname"
+                                        [(ngModel)]="updateCategoryModel.name" placeholder=" Enter Product Name " />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                    (click)="updateCategoryDetails()">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                </button>
+                <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

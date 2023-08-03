@@ -1,0 +1,62 @@
+.closebutton {
+    margin-right: 20px;
+    margin-top: 20px;
+    zoom: 120%;
+}
+
+.searchbutton {
+    margin-top: -.8%;
+    margin-left: -2%;
+}
+
+.carousel {
+    border: none;
+    z-index: 0;
+}
+
+.searchbar {
+    margin-left: 3%;
+}
+
+.cart-nav {
+    width: 100%;
+    border: 5px black;
+}
+
+.card img {
+    padding: 5%;
+}
+
+button {
+    border: none;
+}
+
+.btn-group {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.buy {
+    margin-left: 5%;
+}
+
+.Quantity {
+    margin: 10px;
+    margin-top: 15px;
+}
+
+button:focus {
+    outline: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+b {
+    margin-right: 10px;
+}
+
+h5 {
+    padding-top: 5%;
+}

@@ -1,0 +1,274 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats" (click)="openPendingList()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-product-hunt text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Pending Orders</p>
+                                <p class="card-title">Total: {{plength.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats" (click)="openCompleteList()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-product-hunt text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Completed Orders</p>
+                                <p class="card-title">Total: {{clength.length}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="pendingOpen">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="card-title">Pending Order List</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Contact Number</th>
+                        <th class="text-center">Whatsapp Number</th>
+                        <th class="text-center">Order Price</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of pending ">
+                            <td class="text-center">{{ item.index }}</td>
+                            <td class="text-center">{{ item.fname }} {{ item.lname }}</td>
+                            <td class="text-center">{{ item.contact }}</td>
+                            <td class="text-center">{{ item.whatsapp }}</td>
+                            <td class="text-center">{{ item.totalprice}} ₹</td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                    <i class="fa fa-eye" data-toggle="modal" data-target="#orderListModal"
+                                        (click)="openOrderList(item.id,item.isactive)"></i>
+                                </button>
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeOrderList(item.id)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true"
+                          autoHide="true" responsive="true">
+                    </pagination-controls>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="completeOpen">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="card-title">Pending Order List</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Contact Number</th>
+                        <th class="text-center">Whatsapp Number</th>
+                        <th class="text-center">Order Price</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of completed">
+                            <td class="text-center">{{ item.index }}</td>
+                            <td class="text-center">{{ item.fname }} {{ item.lname }}</td>
+                            <td class="text-center">{{ item.contact }}</td>
+                            <td class="text-center">{{ item.whatsapp }}</td>
+                            <td class="text-center">{{ item.totalprice}} ₹</td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                    <i class="fa fa-eye" data-toggle="modal" data-target="#orderListModal"
+                                        (click)="openOrderList(item.id)"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true"
+                          autoHide="true" responsive="true">
+                    </pagination-controls>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="orderListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Order Details</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-shopping">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-left"></th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">vendor Name</th>
+                                    <th class="text-center">Vendor Contact</th>
+                                    <!-- <th class="text-center">Accept Order</th> -->
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of productOrderList ;let i=index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td>
+                                        <div class="img-container">
+                                            <img src="http://31.220.111.153:2300{{ item.image }}" />
+                                        </div>
+                                    </td>
+                                    <td class="text-center">{{ item.name }}</td>
+                                    <td class="text-center">{{ item.category }}</td>
+                                    <td class="text-center">
+                                        <input type="text" class="form-control" id="oquant" value="{{ item.oquant }}"
+                                            name="oquant" placeholder="Enter Quantity" />
+
+                                    </td>
+                                    <td class="text-center">{{ item.price }}</td>
+                                    <td class="text-center">{{ item.vendorname }}</td>
+                                    <td class="text-center">{{ item.vendorcontact }}</td>
+
+                                    <!-- <td>
+                                        <button class="btn btn-success" *ngIf="item.status"
+                                            (click)="deactiveBanners(i)">
+                                            Active
+                                        </button>
+                                        <button class="btn btn-danger" *ngIf="!item.status" (click)="activeBanners(i)">
+                                            Deactive
+                                        </button>
+                                    </td> -->
+                                    <td class="text-right">
+
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeOrderDetails(item.id)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="row">
+                        <!-- <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Price</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fname" name="fname" disabled
+                                    value="{{totalPriceForDetails}} ₹" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 18px;color: black;">Total
+                                Points</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="tPoints" name="tPoints" disabled
+                                    value="{{totalPointForDetails}}" />
+                            </div>
+                        </div> -->
+                        <button class="btn btn-success btn-round" *ngIf="orderStatus==true"  (click)="acceptOrder()">
+                            Accept Order
+                        </button>
+                        <!-- <button class="btn btn-danger btn-round" *ngIf="orderStatus==0" (click)="activeBanners(i)">
+                            Deactive
+                        </button> -->
+
+                        <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                            <i class="fa fa-times" aria-hidden="true"></i> Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

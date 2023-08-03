@@ -1,0 +1,200 @@
+<div class="main-content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Add Services</h4>
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="cancel" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" name="servicesRegForm" #servicesRegForm="ngForm">
+                <div class="row">
+                    <label class="col-md-2 col-form-label">Service Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group"   >
+                            <input type="text" class="form-control" id="name" name="name"
+                                [(ngModel)]="servicesModel.name" placeholder=" Enter Service Name " required value=""
+                                pattern="[#\d+ ([^,]+), ([A-Z]{2}) (\d{5})]"  #name="ngModel" />
+                        </div>
+                        <div *ngIf="name.errors && (name.dirty || name.touched)" class="alert alert-danger">
+                            <div *ngIf="name.errors.required">
+                                Service Name is required
+                            </div>
+                            <div [hidden]="!name.errors('pattern')">
+                                Enter Only Characters, Numbers, Spacing and Some Special Charatcters Like (.@#$%).
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Service Price</label>
+                    <div class="col-md-4">
+                        <div class="form-group"   >
+                            <input type="text" class="form-control" id="price" [(ngModel)]="servicesModel.price"
+                                name="price" placeholder="Enter Service Price " required value="" validators.pattern="/^-?(0|[1-9]\d*)?$/" pattern="^[0-9]+$"
+                                 #price="ngModel" />
+                        </div>
+                        <div *ngIf="price.errors && (price.dirty || price.touched)" class="alert alert-danger">
+                            <div *ngIf="price.errors.required">
+                                Price is required
+                            </div>
+                            <div [hidden]="!price.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Service Time Duration</label>
+                    <div class="col-md-4">
+                        <div class="form-group"   >
+                            <input type="text" class="form-control" id="time" name="time"
+                                [(ngModel)]="servicesModel.time" placeholder=" Enter Time (Minute)" required value="" validators.pattern="/^-?(0|[1-9]\d*)?$/"
+                                pattern="^[0-9]+$"  #time="ngModel" />
+                        </div>
+                        <div *ngIf="time.errors && (time.dirty || time.touched)" class="alert alert-danger">
+                            <div *ngIf="time.errors.required">
+                                Approx Time is required
+                            </div>
+                            <div [hidden]="!time.errors('pattern')">
+                                Enter Only Numbers (Minutes).
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Service Point</label>
+                    <div class="col-md-4">
+                        <div class="form-group"   >
+                            <input type="text" class="form-control" id="point" [(ngModel)]="servicesModel.point"
+                                name="point" placeholder="Enter Service Point" required value="" validators.pattern="/^-?(0|[1-9]\d*)?$/" pattern="^[0-9]+$"
+                                 #point="ngModel" />
+                        </div>
+                        <div *ngIf="point.errors && (point.dirty || point.touched)" class="alert alert-danger">
+                            <div *ngIf="point.errors.required">
+                                Point is required
+                            </div>
+                            <div [hidden]="!fname.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="col-md-2 col-form-label">Employee Service Point</label>
+                    <div class="col-md-4">
+                        <div class="form-group"   >
+                            <input type="text" class="form-control" id="epoint" [(ngModel)]="servicesModel.epoint"
+                                name="epoint" placeholder="Enter Employee Service Point" required value="" validators.pattern="/^-?(0|[1-9]\d*)?$/" pattern="^[0-9]+$"
+                                 #epoint="ngModel" />
+                        </div>
+                        <div *ngIf="epoint.errors && (epoint.dirty || epoint.touched)" class="alert alert-danger">
+                            <div *ngIf="epoint.errors.required">
+                                Point is required
+                            </div>
+                            <div [hidden]="!fname.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="card-footer" *ngIf="!submitButton">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round" [disabled]="!servicesRegForm.form.valid"
+                        (click)="saveServicesDetail(servicesModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <!-- <button type="submit" class="btn btn-danger btn-round">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button> -->
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" *ngIf="submitButton">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round" (click)="updateServicesDetail(servicesModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" (click)="cancelUpdateButton()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="card-title"> Services List</h4>
+                        </div>
+                        <div class="ml-md-auto">
+                            <label class="col-form-label" style="margin-top: 5px;font-size: 18px;color: black;">Search
+                                By</label>
+                        </div>
+                        <div class="col-md-3 ml-md-auto">
+                            <div class="form-group" style="margin-top: 8px !important;">
+                                <input type="search" id="form1" class="form-control"
+                                    placeholder="Service Name" [(ngModel)]="search"
+                                    (keyup)="searchServicesList($event.target.value)" aria-label="Search" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Services Name</th>
+                                <th class="text-center">Services Price</th>
+                                <th class="text-center">Time Duration</th>
+                                <th class="text-center">Service Point</th>
+                                <th class="text-center">Employee Service Point</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of services | paginate: { itemsPerPage: 10   }; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.name}} </td>
+                                    <td class="text-center">{{ item.price }} ₹</td>
+                                    <td class="text-center">{{ item.time }} minutes</td>
+                                    <td class="text-center">{{ item.point }}</td>
+                                    <td class="text-center">{{ item.epoint }}</td>
+
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                            <i class="fa fa-edit" data-toggle="modal" data-target="#VisitorModal"
+                                                (click)="viewServicesDetails(item)"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeServices(item.id)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls    autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

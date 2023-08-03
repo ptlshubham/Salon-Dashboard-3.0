@@ -1,0 +1,602 @@
+<div class="main-content">
+    <div class="row" *ngIf="showEmp">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-title"> Employee List</h4>
+                        </div>
+                        <div class="ml-md-auto">
+                            <button type="cancel" class="btn btn-danger btn-round" routerLink="/dashboard">
+                                <i class="fa fa-arrow-left"></i> Back
+                            </button>
+                            <button type="Add" class="btn btn-info btn-round" (click)="addEmployee()">
+                                <i class="fa fa-plus"></i> Add Employee
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Employee Name</th>
+                                <th class="text-center">Contact NO</th>
+                                <th class="text-center">Address</th>
+                                <th class="text-center">Gender</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of employeeReg | paginate: { itemsPerPage: 10   }; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.fname}} {{ item.lname}} </td>
+                                    <td class="text-center">{{ item.contact }}</td>
+                                    <td class="text-center">{{ item.address }} ,<br>{{item.city}}</td>
+                                    <td class="text-center">{{ item.gender }}</td>
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-primary btn-icon btn-sm">
+                                            <i class="fa fa-rupee" (click)="openSalary(item)"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                            <i class="fa fa-edit" data-toggle="modal" data-target="#employeeModal"
+                                                (click)="viewEmpDetails(item)"></i>
+                                        </button>
+                                        &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeEmployee(item.id)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls    autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">View/Edit Employee</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-horizontal" name="employeeRegForm" #employeeRegForm="ngForm">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">First Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            [(ngModel)]="updateEmployeeModel.fname" placeholder=" Enter First Name " />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Last Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="lname" name="lname"
+                                            [(ngModel)]="updateEmployeeModel.lname" placeholder=" Enter Last Name" />
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 col-form-label">Contact Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="contact"
+                                            [(ngModel)]="updateEmployeeModel.contact" name="contact"
+                                            placeholder="Enter Contact Number" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="whatsapp"
+                                            [(ngModel)]="updateEmployeeModel.whatsapp" name="whatsapp"
+                                            placeholder="Enter Whatsapp Number" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Address</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <textarea id="address" class="form-control" name="address" rows="3" cols="40"
+                                            [(ngModel)]="updateEmployeeModel.address"
+                                            placeholder="Enter Address"> </textarea>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">City</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="city"
+                                            [(ngModel)]="updateEmployeeModel.city" name="city"
+                                            placeholder="Enter City" />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Pincode</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="pincode"
+                                            [(ngModel)]="updateEmployeeModel.pincode" name="pincode"
+                                            placeholder="Enter Pincode" />
+                                    </div>
+                                </div>
+                                <label class="col-sm-2 col-form-label">Select Gender</label>
+                                <div class="col-md-2">
+                                    <div class="form-check-radio">
+                                        <label class="form-check-label" style="color: black !important">
+                                            <input #genm class="form-check-input" name="gender"
+                                                [(ngModel)]="updateEmployeeModel.gender" type="radio" value="male"
+                                                ngModel />
+                                            Male
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check-radio">
+                                        <label class="form-check-label" style="color: black !important">
+                                            <input #genf class="form-check-input" name="gender"
+                                                [(ngModel)]="updateEmployeeModel.gender" type="radio" value="female"
+                                                ngModel />
+                                            Female
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Selected Services</label>
+                                <div class="col-md-4">
+                                    <!-- <div class="btn-group bootstrap-select w-100">
+                                        <div style="border: 1px #DDDDDD solid !important">
+                                            <angular2-multiselect [ngModelOptions]="{standalone: true}"
+                                                [data]="serviceData" [(ngModel)]="selectedServices"
+                                                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                                                (onDeSelect)="OnItemDeSelect($event)"
+                                                (onSelectAll)="onSelectAll($event)" name="items"
+                                                (onDeSelectAll)="onDeSelectAll($event)">
+                                            </angular2-multiselect>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Selected Services</mat-label>
+                                            <mat-select [formControl]="servicesForMulti" multiple
+                                                [(ngModel)]="updateEmployeeModel.service">
+                                                <mat-option *ngFor="let s of servicesList" [value]="s">
+                                                    {{s.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="updateEmployeeDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="showSalary">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Employee Salary</h4>
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="openEmployee()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="col-form-label">Employee Name</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="employeeModel.fname "
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Contact Number</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="employeeModel.contact"
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Whatsapp Number</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="employeeModel.whatsapp"
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Gender</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" [(ngModel)]="employeeModel.gender"
+                            name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Salary</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname"
+                            [(ngModel)]="salaryModel.salary" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Date</label>
+                    <div class="form-group">
+                        <input type="date" class="form-control" id="fname" name="fname"
+                            [(ngModel)]="salaryModel.paiddate" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Description</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname"
+                            [(ngModel)]="salaryModel.desc" />
+                    </div>
+                </div>
+                <div class="ml-md-auto">
+                    <br>
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveSalaryDetail(salaryModel)"
+                        data-dismiss="modal">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                </div>
+
+                <!-- <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round"
+                        (click)="saveServicesDetail(servicesModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                </div> -->
+                <!-- <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="card-title"> Salary History</h4>
+                    </div>
+                    <div class="ml-md-auto">
+                        <label class="col-form-label" style="margin-top: 5px;font-size: 18px;color: black;">Search
+                            By</label>
+                    </div>
+                    <div class="col-md-3 ml-md-auto">
+                        <div class="form-group" style="margin-top: 8px !important;">
+                            <input type="search" id="form1" class="form-control"
+                                placeholder="Stock Name, Type, Dealer" [(ngModel)]="search"
+                                (keyup)="searchSalaryList($event.target.value)" aria-label="Search" />
+                        </div>
+                    </div>
+                </div> -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                            <th class="text-center">#</th>
+                            <!-- <th class="text-center">Employee Name</th>
+                            <th class="text-center">Contact</th> -->
+                            <th class="text-center">Employee Name</th>
+                            <th class="text-center">Employee Contact</th>
+                            <th class="text-center">Salary</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Paid date</th>
+                            <th class="text-right">Actions</th>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of salaryList | paginate: { itemsPerPage: 5   }; let i = index">
+                                <td class="text-center">{{ i+1 }}</td>
+                                <!-- <td class="text-center">{{ item.emp}} </td>
+                                <td class="text-center">{{item.cont}}</td> -->
+                                <td class="text-center">{{ item.fname}} {{ item.lname}} </td>
+                                <td class="text-center">{{ item.contact}} </td>
+                                <td class="text-center">{{ item.salary }} ₹</td>
+                                <td class="text-center">{{ item.desc }} </td>
+                                <td class="text-center">{{ item.paiddate | date }}</td>
+                                <td class="text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-primary btn-icon btn-sm"
+                                        (click)="generaterecipt(item.index)">
+                                        <i class="fa fa-download"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                        <i class="fa fa-edit" data-toggle="modal" data-target="#salaryModal"
+                                            (click)="viewSalDetails(item)"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                        (click)="removeSalary(item.id)">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="ml-md-auto">
+                        <pagination-controls    autoHide="true" responsive="true">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="addEmp">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Add Employee</h4>
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="closeEmpForm()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" name="employeeRegForm" #employeeRegForm="ngForm">
+                <div class="row">
+                    <label class="col-md-2 col-form-label">First Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="fname" name="fname"
+                                [(ngModel)]="employeeModel.fname" placeholder=" Enter First Name " required value=""
+                                pattern="^[a-zA-Z]+$"   #fname="ngModel" />
+                        </div>
+                        <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class="alert alert-danger">
+                            <div *ngIf="fname.errors.required">
+                                First Name is required
+                            </div>
+                            <div [hidden]="!fname.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Last Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="lname" name="lname"
+                                [(ngModel)]="employeeModel.lname" placeholder=" Enter Last Name" required value=""
+                                pattern="^[a-zA-Z]+$"   #lname="ngModel" />
+                        </div>
+                        <div *ngIf="lname.errors && (lname.dirty || lname.touched)" class="alert alert-danger">
+                            <div *ngIf="lname.errors.required">
+                                Last Name is required
+                            </div>
+                            <div [hidden]="!lname.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Contact Number</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="contact" [(ngModel)]="employeeModel.contact"
+                                name="contact" placeholder="Enter Contact Number" required value=""
+                                pattern="^[0-9].{9,9}$"   #contact="ngModel" />
+                        </div>
+                        <div *ngIf="contact.errors && (contact.dirty || contact.touched)" class="alert alert-danger">
+                            <div *ngIf="contact.errors.required">
+                                Last Name is required
+                            </div>
+                            <div [hidden]="!contact.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Whatsapp Number</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="whatsapp" [(ngModel)]="employeeModel.whatsapp"
+                                name="whatsapp" placeholder="Enter Whatsapp Number" required value=""
+                                pattern="^[0-9].{9,9}$"   #whatsapp="ngModel" />
+                        </div>
+                        <div *ngIf="whatsapp.errors && (whatsapp.dirty || whatsapp.touched)" class="alert alert-danger">
+                            <div *ngIf="whatsapp.errors.required">
+                                Whatsapp Number is required
+                            </div>
+                            <div [hidden]="!whatsapp.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Address</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <textarea id="address" name="address" rows="4" class="form-control" cols="54" [(ngModel)]="employeeModel.address"
+                                placeholder="Enter Address" required value=""
+                                pattern="[#\d+ ([^,]+), ([A-Z]{2}) (\d{5})]"  
+                                #address="ngModel"> </textarea>
+                        </div>
+                        <div *ngIf="address.errors && (address.dirty || address.touched)" class="alert alert-danger">
+                            <div *ngIf="address.errors.required">
+                                Address is required
+                            </div>
+                            <div [hidden]="!address.errors('pattern')">
+                                Enter Only Numbers, Characters and Special Charatcters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">City</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="city" [(ngModel)]="employeeModel.city"
+                                name="city" placeholder="Enter City" required value="" pattern="^[a-zA-Z]+$"
+                                  #city="ngModel" />
+                        </div>
+                        <div *ngIf="city.errors && (city.dirty || city.touched)" class="alert alert-danger">
+                            <div *ngIf="city.errors.required">
+                                City Name is required
+                            </div>
+                            <div [hidden]="!city.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Pincode</label>
+                    <div class="col-md-4">
+                        <div class="form-group"  >
+                            <input type="text" class="form-control" id="pincode" [(ngModel)]="employeeModel.pincode"
+                                name="pincode" placeholder="Enter Pincode" required value="" pattern="^[1-9][0-9]{5}$"
+                                  #pincode="ngModel" />
+                        </div>
+                        <div *ngIf="pincode.errors && (pincode.dirty || pincode.touched)" class="alert alert-danger">
+                            <div *ngIf="pincode.errors.required">
+                                Pincode is required
+                            </div>
+                            <div [hidden]="!pincode.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Select Gender</label>
+                    <div class="col-md-2">
+                        <div class="form-check-radio">
+                            <label class="form-check-label" style="color: black !important">
+                                <input #genm class="form-check-input" name="gender" [(ngModel)]="employeeModel.gender"
+                                    type="radio" value="male" ngModel />
+                                Male
+                                <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-check-radio">
+                            <label class="form-check-label" style="color: black !important">
+                                <input #genf class="form-check-input" name="gender" [(ngModel)]="employeeModel.gender"
+                                    type="radio" value="female" ngModel />
+                                Female
+                                <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Select Services</label>
+                    <div class="col-md-4">
+                        <div class="btn-group bootstrap-select w-100">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Select Services</mat-label>
+                                <mat-select [formControl]="servicesForMulti" multiple
+                                    [(ngModel)]="employeeModel.service">
+                                    <mat-option *ngFor="let s of servicesList" [value]="s">{{s.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- <div style="border: 1px #DDDDDD solid !important">
+                                <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="serviceData"
+                                    [(ngModel)]="selectedServices" [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)" name="items"
+                                    (onDeSelectAll)="onDeSelectAll($event)">
+                                </angular2-multiselect>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+                <!-- [disabled]="!employeeRegForm.form.valid" -->
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveEmployeeDetail(employeeModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" (click)="closeEmpForm()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="salaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">View/Edit Salary</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-horizontal" name="employeeRegForm" #employeeRegForm="ngForm">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Salary</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            [(ngModel)]="updateSalaryModel.salary" placeholder=" Enter First Name " />
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label">Description</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="lname" name="lname"
+                                            [(ngModel)]="updateSalaryModel.desc" placeholder=" Enter Last Name" />
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 col-form-label">Paid Date</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" id="contact"
+                                            [(ngModel)]="updateSalaryModel.paiddate" name="contact"
+                                            placeholder="Enter Contact Number" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="updateSalaryDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

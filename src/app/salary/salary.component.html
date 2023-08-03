@@ -1,0 +1,64 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-title">Salary List</h4>
+                        </div>
+                        <!-- <div class="ml-md-auto">
+                            <button type="Add" class="btn btn-info btn-round" >
+                                <i class="fa fa-plus"></i> Add Employee
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Salary</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Paid Date</th>
+                                <th class="text-center">Employee Id</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of salaryList | paginate: { itemsPerPage: 5   }; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.salary}} </td>
+                                    <td class="text-center">{{ item.status }}</td>
+                                    <td class="text-center">{{ item.paiddate}} </td>
+                                    <td class="text-center">{{ item.empid }}</td>
+
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-primary btn-icon btn-sm"
+                                        (click)="generaterecipt(item.index)" *ngIf="item.status==true">
+                                            <i class="fa fa-download"></i>
+                                        </button>
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm"
+                                            *ngIf="item.status==false">
+                                            <i class="fa fa-check" (click)="updateSalaryStatus(item.id)"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="ml-md-auto">
+                            <pagination-controls  autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

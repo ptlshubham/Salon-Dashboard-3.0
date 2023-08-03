@@ -1,0 +1,542 @@
+<div class="main-content">
+    <div *ngIf="adminRole == 'Admin'">
+        <div class="card" *ngIf="custAppointment">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h4 class="card-title">Add Offer</h4>
+                    </div>
+                    <div class="ml-md-auto">
+                        <!-- <button type="cancel" class="btn btn-danger btn-round" (click)="backToOffer()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button> -->
+                        <button type="cancel" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                            <i class="fa fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="col-form-label">Offer Name</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="fname" [(ngModel)]="offerModel.offername"
+                                name="fname" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngFor="let add of addService; let ind = index">
+                    <div class="col-md-4">
+                        <label class="col-form-label">Select Service</label>
+                        <div class="dropdown form-group">
+                            <button class="dropdown-toggle btn btn btn btn-block" type="button"
+                                name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" style="margin: 0px 0px !important;">
+                                {{ add.selectedServ }}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-header">Select Service</div>
+                                <div *ngFor="let sl of servicesList">
+                                    <a class="dropdown-item" (click)="selectServiceList(sl.id,ind)"
+                                        style="color:#252422 !important">{{sl.name}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <i class="fa fa-plus-circle" aria-hidden="true" (click)="addServiceList(add)"
+                            style="font-size: 33px !important; margin-top: 47% !important"></i>
+                    </div>
+                    <div class="col-md-1" *ngIf="ind > 0">
+                        <i class="fa fa-times-circle" aria-hidden="true" (click)="removeServiceList(ind)" style="
+                        font-size: 33px !important;
+                        margin-top: 47% !important;
+                        margin-left: -80px !important;
+                      "></i>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                            <th class="text-center">#</th>
+                            <th class="text-center">Services Name</th>
+
+                            <th class="text-center">Price</th>
+
+                            <th class="text-right">Actions</th>
+                        </thead>
+                        <tbody *ngIf="addService[0].serpoint !=null">
+                            <tr *ngFor="let item of addService; let i = index">
+                                <td class="text-center">{{ i+1 }}</td>
+                                <td class="text-center">{{ item.selectedServ}} </td>
+                                <td class="text-center">{{ item.serprice }} ₹</td>
+                                <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeItem(i)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+
+                    <div class="col-md-2">
+                        <label class="col-form-label" style="font-size: 20px;color: black;">Total
+                            Price</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="totalofferprice" name="totalofferprice" disabled
+                                value="{{totalprice}} ₹" [(ngModel)]="offerModel.totalprice" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="col-form-label" style="font-size: 20px;color: black;">Enter Percentage </label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="offerpercentage" name="offerpercentage" 
+                                [(ngModel)]="offerModel.percentage" placeholder="Enter Percentage" (keyup)="getOfferVal()"/>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label class="col-form-label" style="font-size: 20px;color: black;">Offer Price
+                        </label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="offerprice" name="offerprice" disabled
+                                value="{{offerModel.offerprice}} ₹" [(ngModel)]="offerModel.offerprice" />
+
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="ml-md-auto">
+                        <button type="submit" class="btn btn-info btn-round ml5" (click)="saveOfferDetail(offerModel)">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                        </button>
+                        <button type="submit" class="btn btn-danger btn-round" (click)="backToOffer()">
+                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row" *ngIf="!selectOffer">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="card-title"> Offer List</h4>
+                            </div>
+                            <div class="ml-md-auto">
+                                <button type="submit" *ngIf="isDashboard" class="btn btn-info btn-round"
+                                    data-toggle="modal" data-target="#addOfferModal">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add Offer
+                                </button>
+                            </div>
+                            <div class="ml-md-auto">
+                                <label class="col-form-label"
+                                    style="margin-top: 5px;font-size: 18px;color: black;">Search
+                                    By</label>
+                            </div>
+                            <div class="col-md-3 ml-md-auto">
+                                <div class="form-group" style="margin-top: 8px !important;">
+                                    <input type="search" id="form1" class="form-control" placeholder="Offer Name"
+                                        [(ngModel)]="search" (keyup)="searchOfferList($event.target.value)"
+                                        aria-label="Search" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <th class="text-center"></th>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Offer Name</th>
+                                    <th class="text-center">Offer Price</th>
+                                    <th class="text-center">Total Price</th>
+                                    <th class="text-center"> Discount</th>
+                                    <th class="text-center">Display Offer</th>
+                                    <th class="text-right">Actions</th>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of offer ; let i = index">
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" name="list_name"
+                                                        (change)="seletedOfferDetails(item)" type="checkbox" />
+                                                    <span class="form-check-sign"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">{{ item.index }}</td>
+                                        <td class="text-center">{{ item.offername }}</td>
+                                        <td class="text-center">{{ item.offerprice }}</td>
+                                        <td class="text-center">{{ item.totalprice }}</td>
+                                        <td class="text-center">{{ item.percentage }} %</td>
+                                        <!-- <td class="text-center">{{ item.status }}</td> -->
+                                        <td class="text-center">
+                                            <button class="btn btn-success" *ngIf="item.status"
+                                                (click)="deactiveBanners(i)">
+                                                Active
+                                            </button>
+                                            <button class="btn btn-danger" *ngIf="!item.status"
+                                                (click)="activeBanners(i)">
+                                                Deactive
+                                            </button>
+                                        </td>
+                                        <td class="text-right">
+                                            <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                                <i class="fa fa-eye" (click)="onlyViewOfferDetails(item.id)"></i>
+                                            </button>
+                                            &nbsp;
+                                            <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                                <i class="fa fa-edit" data-toggle="modal" data-target="#offerModal"
+                                                    (click)="viewOfferDetails(item)"></i>
+                                            </button>
+                                            &nbsp;
+                                            <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                                (click)="removeOfferList(item.id)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="ml-md-auto">
+                                <pagination-controls    maxSize="10" autoHide="true"
+                                    responsive="true">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card" *ngIf="viewOfferAllData">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Offer Appointment List</h4>
+                    </div>
+                    <div class="ml-md-auto">
+                        <button type="cancel" class="btn btn-danger btn-round" (click)="backToOffer()"
+                            routerLink='/offer'>
+                            <i class="fa fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                            <th class="text-center">#</th>
+                            <th class="text-center">Offer Id</th>
+                            <th class="text-center">Services Name</th>
+                            <th class="text-center">Offer Name</th>
+                            <th class="text-center">Offer Price</th>
+                            <!-- <th class="text-right">Actions</th> -->
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of offerData">
+                                <td class="text-center">{{ item.index }}</td>
+                                <td class="text-center">{{ item.offerid }}</td>
+                                <td class="text-center">{{ item.servicesname }}</td>
+                                <td class="text-center">{{ item.offername }}</td>
+                                <td class="text-center">{{ item.offerprice}}</td>
+                                <!-- <td class="text-right">
+                                    <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                        <i class="fa fa-eye" data-toggle="modal" data-target="#offerServicesModal"
+                                            (click)="openUsedServiceList(item)"></i>
+                                    </button>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="ml-md-auto">
+                        <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true"
+                             autoHide="true" responsive="true">
+                        </pagination-controls>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">View/Edit Offer</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="col-form-label">Offer Name</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fname" [(ngModel)]="offerModel.offername"
+                                    name="fname" />
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row" *ngFor="let add of addService; let ind = index">
+                        <div class="col-md-4">
+                            <label class="col-form-label">Select Service</label>
+                            <div class="dropdown form-group">
+                                <button class="dropdown-toggle btn btn btn btn-block" type="button"
+                                    name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" style="margin: 0px 0px !important;">
+                                    {{ add.selectedServ }}
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-header">Select Service</div>
+                                    <div *ngFor="let sl of servicesList">
+                                        <a class="dropdown-item" (click)="selectServiceList(sl.id,ind)"
+                                            style="color:#252422 !important">{{sl.name}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-1">
+                            <i class="fa fa-plus-circle" aria-hidden="true" (click)="addServiceList(add)"
+                                style="font-size: 33px !important; margin-top: 47% !important"></i>
+                        </div>
+                        <div class="col-md-1" *ngIf="ind > 0">
+                            <i class="fa fa-times-circle" aria-hidden="true" (click)="removeServiceList(ind)" style="
+                            font-size: 33px !important;
+                            margin-top: 47% !important;
+                            margin-left: -80px !important;
+                          "></i>
+                        </div>
+                    </div>
+    
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Services Name</th>
+    
+                                <th class="text-center">Price</th>
+    
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody *ngIf="addService[0].serpoint !=null">
+                                <tr *ngFor="let item of addService; let i = index">
+                                    <td class="text-center">{{ i+1 }}</td>
+                                    <td class="text-center">{{ item.selectedServ}} </td>
+    
+                                    <td class="text-center">{{ item.serprice }} ₹</td>
+    
+                                    <td class="text-right">
+                                        <!-- <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                            <i class="fa fa-eye" (click)="onlyViewOfferDetails(item.id)"></i>
+                                        </button>
+                                        &nbsp; -->
+    
+    
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                            (click)="removeItem(i)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 20px;color: black;">Total
+                                Price</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="totalofferprice" name="totalofferprice" disabled
+                                    value="{{totalprice}} ₹" [(ngModel)]="offerModel.totalprice" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="col-form-label" style="font-size: 20px;color: black;">Enter Percentage </label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="offerpercentage" name="offerpercentage" 
+                                    [(ngModel)]="offerModel.percentage" placeholder="Enter Percentage" (keyup)="getOfferVal()"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="col-form-label" style="font-size: 20px;color: black;">Offer Price
+                            </label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="offerprice" name="offerprice" disabled
+                                    value="{{offerModel.offerprice}} ₹" [(ngModel)]="offerModel.offerprice" />
+    
+                            </div>
+                        </div>
+    
+                    </div>
+                    <br>
+                    <!-- <div class="row">
+                        <div class="ml-md-auto">
+                            <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                            (click)="updateOfferDetails()">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                        </button>
+                        </div>
+                    </div> -->
+    
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-info btn-round" data-dismiss="modal"
+                        (click)="updateOfferDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addOfferModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Add New Offer</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-horizontal" name="CustForm" #CustForm="ngForm">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Offer Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                            [(ngModel)]="offerModel.fname" placeholder=" Enter First Name " required
+                                            value="" pattern="^[a-zA-Z]+$"   #fname="ngModel" />
+                                    </div>
+                                    <div *ngIf="fname.errors && (fname.dirty || fname.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="fname.errors.required">
+                                            First Name is required
+                                        </div>
+                                        <div [hidden]="!fname.errors('pattern')">
+                                            Enter Only Characters.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 col-form-label">Offer Price</label>
+                                <div class="col-md-4">
+                                    <div class="form-group"  >
+                                        <input type="text" class="form-control" id="contact"
+                                            [(ngModel)]="offerModel.contact" name="contact"
+                                            placeholder="Enter Offer price" required value="" pattern="^[0-9].{9,9}$"
+                                              #contact="ngModel" />
+                                    </div>
+                                    <div *ngIf="contact.errors && (contact.dirty || contact.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="contact.errors.required">
+                                            offer Price is required.
+                                        </div>
+                                        <div [hidden]="!contact.errors('pattern')">
+                                            Enter Only Numbers.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveOfferDetail(offerModel)"
+                        [disabled]="!CustForm.form.valid" data-dismiss="modal">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hostingService" *ngIf="adminRole == 'Customer'">
+        <h2 class="tagLine">Best Offers Grab The Deal</h2>
+        <div class="row d-flex">
+            <div class="col-md-3" *ngFor="let item of activeOffers">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h5>{{ item.offername }}</h5>
+                        <!-- <h6>Ideal solution for beginners</h6> -->
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="card-body">
+                            <s class="text-secondary">&#8377;{{item.totalprice}}</s><span class="badge bg-danger">Save
+                                {{item.percentage }} %</span>
+
+                            <div class="price">
+                                <h1 class="display-4"><span class="rupees">&#8377;</span> <span class="trontext">{{item.offerprice }}</span>
+                                </h1>
+                            </div>
+                            <!-- <button type="button" class="buttons btn btn-outline-primary">Add to Cart</button> -->
+                            <!-- <p class="text-secondary" style="margin-top: 15px; margin-bottom: 35px">₹159.00/mo when you
+                                renew
+                            </p> -->
+
+                            <div class="separated-features-ab-test-original">
+                                <ul class="listing">
+                                    <li class="servicesList" *ngFor="let ofr of item.offeredServices;let i=index">
+                                        <b><i class="fa fa-dot-circle-o" aria-hidden="true"></i></b>
+                                        {{ofr.servicesname}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <hr id="footers">
+                        <button type="button" class="buttons btn btn-outline-primary">Show More</button> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

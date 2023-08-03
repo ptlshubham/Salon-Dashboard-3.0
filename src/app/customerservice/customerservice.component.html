@@ -1,0 +1,230 @@
+<div class="main-content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Customer Appointment</h4>
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="backToDashboard()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row" *ngFor="let cd of customerData; let ind = index">
+                <div class="col-md-4">
+                    <label class="col-form-label">Customer Name</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" 
+                            value={{cd.fname}} name="fname" disabled  />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Contact Number</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" 
+                            value={{cd.contact}} name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Whatsapp Number</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" 
+                            value={{cd.whatsapp}} name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Email Address</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" 
+                            value={{cd.email}} name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Gender</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" 
+                            value={{cd.gender}} name="fname" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Date</label>
+                    <div class="form-group">
+                        <input type="date" [(ngModel)]="appointmentModel.selectdate" class="form-control" id="selectdate" 
+                            value="{{formdate}}" name="selectdate"/>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3">
+                    <label class="col-form-label">Select Service</label>
+                    <div class="btn-group bootstrap-select w-100">
+                        <div style="border: 1px #DDDDDD solid !important">
+                            <angular2-multiselect [ngModelOptions]="{standalone: true}" [data]="serviceData"
+                                [(ngModel)]="selectedServices" [settings]="dropdownSettings"
+                                (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                                (onSelectAll)="onSelectAll($event)" name="items"
+                                (onDeSelectAll)="onDeSelectAll($event)">
+                            </angular2-multiselect>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="col-form-label">Select Team Member</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ selectedEmp }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Team Member</div>
+                            <div *ngFor="let e of employeeReg">
+                                <a class="dropdown-item" (click)="selectEmpList(e.id)"
+                                    style="color:#252422 !important">{{e.fname}}
+                                    {{e.lname}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="row" *ngFor="let add of addService; let ind = index">
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Service</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ add.selectedServ }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Service</div>
+                            <div *ngFor="let sl of servicesList">
+                                <a class="dropdown-item" (click)="selectServiceList(sl.id,ind)"
+                                    style="color:#252422 !important">{{sl.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="col-form-label">Select Team Member</label>
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn btn btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="margin: 0px 0px !important;">
+                            {{ add.selectedEmp }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Team Member</div>
+                            <div *ngFor="let e of employeeReg">
+                                <a class="dropdown-item" (click)="selectEmpList(e.id,ind)"
+                                    style="color:#252422 !important">{{e.fname}}
+                                    {{e.lname}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <i class="fa fa-plus-circle" aria-hidden="true" (click)="addServiceList(add)"
+                        style="font-size: 33px !important; margin-top: 47% !important"></i>
+                </div>
+                <div class="col-md-1" *ngIf="ind > 0">
+                    <i class="fa fa-times-circle" aria-hidden="true" (click)="removeServiceList(ind)" style="
+                        font-size: 33px !important;
+                        margin-top: 47% !important;
+                        margin-left: -80px !important;
+                      "></i>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Services Name</th>
+                        <th class="text-center">Employee Name</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Point</th>
+                        <th class="text-center">Approx Time</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody *ngIf="addService[0].serpoint !=null">
+                        <tr *ngFor="let item of addService; let i = index">
+                            <td class="text-center">{{ i+1 }}</td>
+                            <td class="text-center">{{ item.selectedServ}} </td>
+                            <td class="text-center">{{item.selectedEmp}}</td>
+                            <td class="text-center">{{ item.serprice }} ₹</td>
+                            <td class="text-center">{{ item.serpoint }}</td>
+                            <td class="text-center">{{ item.sertime }}</td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeItem(i)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Total Points</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="tPoints" name="tPoints" disabled
+                            value="{{tCustPoint}}" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Enter Points </label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="redeemPoint" name="redeemPoint"
+                            [disabled]="tCustPoint ==0 " [(ngModel)]="appointmentModel.redeempoints"
+                            placeholder="Enter Redeem Point" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Total
+                        Price</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname" disabled
+                            value="{{totalPrice}} ₹" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Today
+                        Points</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname" disabled
+                            value="{{totalPoint}} Point" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="col-form-label" style="font-size: 20px;color: black;">Approx Time</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fname" name="fname" disabled
+                            value="{{totalTime}} minute" />
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="button" class="btn btn-info btn-round ml5"><i
+                            class="fa fa-file-pdf-o"></i>
+                        Invoice(PDF)</button>
+                    <button type="submit" class="btn btn-info btn-round ml5" (click)="saveAppointmentDetails()">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-round" (click)="backToDashboard()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

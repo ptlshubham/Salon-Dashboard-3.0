@@ -1,0 +1,302 @@
+<div class="main-content">
+    <div class="card" *ngIf="!searchexpenses">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Add Expenses</h4>
+                </div>
+                <div class="ml-md-auto">
+
+                    <button type="cancel" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" name="expensesRegForm" #expensesRegForm="ngForm">
+                <div class="row">
+                    <label class="col-md-2 col-form-label">Expenses Date</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="date" [(ngModel)]="ExpensesModel.expensesdate" class="form-control" value="{{ formdate }}" name="expensesdate" id="expensesdate">
+                        </div>
+                        <!-- <div class="alert alert-danger">
+                            <div>
+                                Service Name is required
+                            </div>
+                            <div>
+                                Enter Only Characters, Numbers, Spacing and Some Special Charatcters Like (.@#$%).
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <label class="col-md-2 col-form-label">Expenses Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" #name="ngModel" pattern="[A-Za-z]{1,20}" class="form-control" id="expensesname" name="expensesname" [(ngModel)]="ExpensesModel.expensesname" placeholder="Enter Expenses Name" required />
+                        </div>
+                        <div *ngIf="name.errors && (name.dirty || name.touched)" class="alert alert-danger">
+                            <div *ngIf="name.errors.required">
+                                Expenses Name is required.
+                            </div>
+                            <div [hidden]="!name.errors('pattern')">
+                                Enter Only String.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 col-form-label">Expenses Prices</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" #price="ngModel" pattern="^[0-9]{1,7}" id="expensesprices" name="expensesprices" [(ngModel)]="ExpensesModel.expensesprices" placeholder=" Enter Expenses Prices" required value="" />
+                        </div>
+                        <div *ngIf="price.errors && (price.dirty || price.touched)" class="alert alert-danger">
+                            <div *ngIf="price.errors.required">
+                                Expenses Price is required.
+                            </div>
+                            <div [hidden]="!price.errors('pattern')">
+                                Enter Only Numbers.
+                            </div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 mt-100 col-form-label">Payment Type</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select (change)="selectChangeHandler($event)" class="form-control">
+                            <option selected="Single Select">Single Select</option>
+                            <option value="Gpay">Gpay</option>
+                            <option value="Bank-Transaction">Bank-Transaction</option>
+                            <option value="Cash">Cash</option>
+                        </select>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                        <div class="col-lg-5 col-md-6 col-sm-3" style="">
+                            <div class="btn-group bootstrap-select w-100">
+                                <select class="selectpicker w-100" data-size="7" data-style="btn btn-primary btn-round" title="Single Select">
+                                <option disabled selected>Single Option</option>
+                                <option value="2">Foobar</option>
+                                <option value="3">Is great</option>
+                              </select>
+                            </div>
+                        </div> -->
+                    <!-- <select class="form-control" style="border-radius: 25px;" required name="paymenttype" id="paymenttype" [(ngModel)]="ExpensesModel.paymenttype">
+                                <option style="border-radius: 25px;" value="Gpay" >Gpay</option>
+                                <option style="border-radius: 25px;" value="Bank-Transaction">Bank-Transaction</option>
+                                <option style="border-radius: 25px;" value="Cash">Cash</option>
+                            </select> -->
+
+                    <!-- </div> -->
+                    <label class="col-md-2 col-form-label">Employee Name</label>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" #employeename="ngModel" pattern="[A-Za-z]{1,20}" id="employeename" name="employeename" [(ngModel)]="ExpensesModel.employeename" placeholder=" Enter Employee Name" required value="" />
+                        </div>
+                        <div *ngIf="employeename.errors && (employeename.dirty || employeename.touched)" class="alert alert-danger">
+                            <div *ngIf="employeename.errors.required">
+                                Employee Name is required.
+                            </div>
+                            <div [hidden]="!employeename.errors('pattern')">
+                                Enter Only Characters.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <center>
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveExpensesDetail(ExpensesModel)">
+                        <!-- (click)="saveExpensesDetail(ExpensesModel)" 
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                </button>
+                    <button type="submit" class="btn btn-danger btn-round" routerLink='/dashboard'>
+                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </button>
+                </center> -->
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-info btn-round" [disabled]="!expensesRegForm.form.valid" (click)="saveExpensesDetail(ExpensesModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <!-- <button type="submit" class="btn btn-danger btn-round">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="card-title"> Expenses List</h4>
+                        </div>
+                        <div class="ml-md-auto">
+                            <label class="col-form-label" style="margin-top: 5px;font-size: 18px;color: black;">Search
+                                By</label>
+                        </div>
+                        <div class="col-md-2 ml-md-auto">
+                            <div class="form-group" style="margin-top: 8px !important;">
+                                <p>
+                                    <input type="date" id="form1" class="form-control" data-date-format="dd/mm/yy" [(ngModel)]="search" (change)="searchExpensesList($event.target.value)" aria-label="Search" />
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" *ngIf="searchexpenses">
+                            <div class="form-group" style="margin-top: 8px !important;">
+                                <p>
+                                    <input type="month" id="form1" class="form-control" data-date-format="mm/yy" [(ngModel)]="search" (change)="searchExpensesList($event.target.value)" aria-label="Search" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-1" *ngIf="!searchexpenses">
+                            <div class="form-group" style="margin-right: -5px;margin-left: -5px;">
+                                <button class="btn btn-info btn-round" (click)="searmonth()">Month</button>
+                            </div>
+                        </div>
+                        <div class="col-md-1 " *ngIf="searchexpenses">
+                            <div class="form-group" style="margin-top: 8px !important;">
+                                <p>
+                                    <input type="number" class="form-control" data-date-format="yyyy" id="form1" [(ngModel)]="search" (keyup)="searchExpensesList($event.target.value)" aria-label="Search" placeholder="Year" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-1" *ngIf="!searchexpenses">
+                            <div class="form-group" style="margin-right: -5px;margin-left: -5px;">
+                                <button class="btn btn-info btn-round" (click)="searyear()">Year</button>
+                            </div>
+                        </div>
+                        <div class="col-md-auto ml-md-auto" *ngIf="searchexpenses">
+                            <button type="submit" class="btn btn-danger btn-round" (click)="backToExpenses()">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Expenses Date</th>
+                                <th class="text-center">Expenses Name</th>
+                                <th class="text-center">Expenses Prices</th>
+                                <th class="text-center">Employee Name</th>
+                                <th class="text-center">Payment Type</th>
+                                <th class="text-right">Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of expenses | paginate: { itemsPerPage: 10   }; let i = index">
+                                    <td class="text-center">{{ item.index }}</td>
+                                    <td class="text-center">{{ item.expensesdate | date:'dd/MM/yyyy'}}</td>
+                                    <td class="text-center">{{ item.expensesname }}</td>
+                                    <td class="text-center">{{ item.expensesprices }} ₹</td>
+                                    <td class="text-center">{{ item.employeename }}</td>
+                                    <td class="text-center">{{ item.paymenttype }}</td>
+
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                            <i class="fa fa-edit" data-toggle="modal" data-target="#ExpensesModal"
+                                                (click)="viewExpensesDetails(item)"></i>
+                                        </button> &nbsp;
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm" (click)="removeExpensesList(item.id)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <label class="col-md-2" style="font-size: 24px;">Daily Total</label>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" disabled id="lname" name="lname" value="{{dailyTotal}} ₹" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-info btn-round ml5" [disabled]="!dailyTotal" (click)="generateInvoicePDF()"><i class="fa fa-file-pdf-o"></i>
+                                Invoice(PDF)</button>
+                        </div>
+                        <div class="ml-md-auto">
+                            <pagination-controls    autoHide="true" responsive="true">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="modal fade" id="ExpensesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-notice">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="nc-icon nc-simple-remove"></i>
+                        </button>
+                        <h5 class="modal-title" id="myModalLabel">View/Edit Customer</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="instruction">
+                            <form class="form-horizontal" name="employeeRegForm">
+                                <div class="row">
+                                    <label class="col-md-2 col-form-label">Expenses Date</label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" id="expensesdate" name="expensesdate" [(ngModel)]="updateExpensesModel.expensesdate" [value]="updateExpensesModel.expensesdate|date:'yyyy-MM-dd'" placeholder="Enter Manufacture Date">
+                                        </div>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">Expenses Name</label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="expensesname" name="expensesname" [(ngModel)]="updateExpensesModel.expensesname" placeholder=" Enter Last Name" />
+                                        </div>
+                                    </div>
+
+                                    <label class="col-md-2 col-form-label">Expenses Prices</label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="expensesprices" [(ngModel)]="updateExpensesModel.expensesprices" name="expensesprices" placeholder="Enter Contact Number" />
+                                        </div>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">Employee Name</label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="employeename" [(ngModel)]="updateExpensesModel.employeename" name="productprice" placeholder="Enter Product Price" />
+                                        </div>
+                                    </div>
+                                    <label class="col-md-2 col-form-label">Payment type</label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <select class="form-control" name="paymenttype" id="paymenttype" [(ngModel)]="updateExpensesModel.paymenttype">
+                                                    <option value="Gpay">Gpay</option>
+                                                    <option value="Bank-Transaction">Bank-Transaction</option>
+                                                    <option value="Cash">Cash</option>
+                                                </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-info btn-round" data-dismiss="modal" (click)="updateExpensesDetails()">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i> Update
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-round" data-dismiss="modal">
+                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
