@@ -15,6 +15,7 @@ export class ExpensesService {
     ) { }
 
     saveExpensesList(admin: Expenses): Observable<any> {
+        console.log(admin)
         return this.httpClient.post<any>(ApiService.saveExpensesListURL, admin);
     }
     getAllExpensesList(): Observable<Expenses[]> {

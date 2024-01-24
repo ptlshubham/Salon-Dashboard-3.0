@@ -1,5 +1,5 @@
 <div class="main-content">
-    <div class="row" *ngIf="showEmp">
+    <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -201,7 +201,7 @@
             </div>
         </div>
     </div>
-    <div class="card" *ngIf="showSalary">
+    <div class="card" >
         <div class="card-header">
             <div class="row">
                 <div class="col-md-9">
@@ -268,7 +268,7 @@
                 </div>
                 <div class="ml-md-auto">
                     <br>
-                    <button type="submit" class="btn btn-info btn-round" (click)="saveSalaryDetail(salaryModel)"
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveSalaryDetail()"
                         data-dismiss="modal">
                         <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
                     </button>
@@ -344,14 +344,14 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="ml-md-auto">
-                        <pagination-controls    autoHide="true" responsive="true">
-                        </pagination-controls>
+                        <!-- <pagination-controls    autoHide="true" responsive="true">
+                        </pagination-controls> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card" *ngIf="addEmp">
+    <div class="card" >
         <div class="card-header">
             <div class="row">
                 <div class="col-md-9">
@@ -533,7 +533,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="ml-md-auto">
-                    <button type="submit" class="btn btn-info btn-round" (click)="saveEmployeeDetail(employeeModel)">
+                    <button type="submit" class="btn btn-info btn-round" (click)="saveEmployeeDetail()">
                         <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
                     </button>
                     <button type="submit" class="btn btn-danger btn-round" (click)="closeEmpForm()">

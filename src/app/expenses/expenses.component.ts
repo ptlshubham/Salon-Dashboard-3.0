@@ -15,7 +15,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./expenses.component.css']
 })
 export class ExpensesComponent implements OnInit {
-  public ExpensesModel: Expenses = new Expenses;
+  public ExpensesModel: any = [];
   public expensesList: Expenses[];
   public expenses: Expenses[] = [];
   public Allexpenses: Expenses[] = [];
@@ -57,7 +57,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   getExpensesDetails() {
-     
+
     this.expensesService.getAllExpensesList().subscribe((data: any) => {
       this.Allexpenses = data;
       this.expenses = [];
@@ -135,36 +135,36 @@ export class ExpensesComponent implements OnInit {
     this.getExpensesDetails();
   }
 
-  
-  searmonth(){
+
+  searmonth() {
     this.searchexpenses = true;
-     this.searchmonth = true;
-     this.transform(this.formdate)
-   }
-   searyear(){
-    this.searchexpenses = true;
-    this.searchmonth=false;
-    this.searchyear = true;
-     this.transform(this.formdate)
-   }
-   backToExpenses(){
-     this.searchexpenses=false;
-     this.getExpensesDetails()
-   }
-   searchExpensesList(val) {
-     this.searchexpenses = true;
-    if (!val ) {
-      this.getExpensesDetails();
-    } 
-    else if(val.length === 7){
     this.searchmonth = true;
-    this.transform(val);
+    this.transform(this.formdate)
+  }
+  searyear() {
+    this.searchexpenses = true;
+    this.searchmonth = false;
+    this.searchyear = true;
+    this.transform(this.formdate)
+  }
+  backToExpenses() {
+    this.searchexpenses = false;
+    this.getExpensesDetails()
+  }
+  searchExpensesList(val) {
+    this.searchexpenses = true;
+    if (!val) {
+      this.getExpensesDetails();
     }
-    else if(val.length === 4){
-      this.searchmonth=false;
+    else if (val.length === 7) {
+      this.searchmonth = true;
+      this.transform(val);
+    }
+    else if (val.length === 4) {
+      this.searchmonth = false;
       this.searchyear = true;
       this.transform(val);
-      }
+    }
     else {
       this.searchyear = false;
       this.searchmonth = false;
@@ -174,42 +174,42 @@ export class ExpensesComponent implements OnInit {
   transform(searchValue: Date) {
     this.expenses = [];
     this.dailyTotal = 0;
-    var searchdate = new Date(searchValue).getDate ()
+    var searchdate = new Date(searchValue).getDate()
     var searchmonth = new Date(searchValue).getUTCMonth()
-    var searchyear = new Date(searchValue).getFullYear ()
+    var searchyear = new Date(searchValue).getFullYear()
     this.Allexpenses.forEach(element => {
-      var newdate = new Date(element.expensesdate).getDate ()
-      var newmonth = new Date(element.expensesdate).getMonth ()
-      var newyear = new Date(element.expensesdate).getFullYear ()
+      var newdate = new Date(element.expensesdate).getDate()
+      var newmonth = new Date(element.expensesdate).getMonth()
+      var newyear = new Date(element.expensesdate).getFullYear()
       if (searchdate === newdate && searchmonth === newmonth && searchyear === newyear && this.searchmonth == false && this.searchyear == false) {
         this.expenses.push(element);
         this.dailyTotal = this.dailyTotal + element.expensesprices;
       }
-      else if (searchmonth === newmonth && searchyear === newyear && this.searchmonth == true){
+      else if (searchmonth === newmonth && searchyear === newyear && this.searchmonth == true) {
         this.expenses.push(element);
         this.dailyTotal = this.dailyTotal + element.expensesprices;
       }
-      else if (searchyear === newyear && this.searchyear == true && this.searchmonth == false){
+      else if (searchyear === newyear && this.searchyear == true && this.searchmonth == false) {
         this.expenses.push(element);
         this.dailyTotal = this.dailyTotal + element.expensesprices;
-      }   
-     })
-     for (let i = 0; i < this.expenses.length; i++) {
+      }
+    })
+    for (let i = 0; i < this.expenses.length; i++) {
       this.expenses[i].index = i + 1;
-    } 
+    }
   }
 
 
 
   generateInvoicePDF(action = 'open') {
     var invoctype = String();
-    if(this.searchmonth === true){
+    if (this.searchmonth === true) {
       invoctype = "Monthly";
     }
-    else if(this.searchyear === true){
+    else if (this.searchyear === true) {
       invoctype = "Yearly";
     }
-    else{
+    else {
       invoctype = "Daily";
     }
     let docDefinition = {
@@ -261,7 +261,7 @@ export class ExpensesComponent implements OnInit {
           fontSize: 14,
         },
         {
-          text: 'Expenses :    '+ invoctype,
+          text: 'Expenses :    ' + invoctype,
           alignment: 'left',
           fontSize: 14,
           margin: [0, 0, 0, 15]
@@ -272,10 +272,10 @@ export class ExpensesComponent implements OnInit {
             headerRows: 1,
             widths: ['*', 'auto', 'auto', 'auto', 'auto'],
             body: [
-              [{text: 'Expenses name',style:'tablehead'}, {text:'Expenses Date',style:'tablehead'}, {text: 'Employee Name',style:'tablehead'}, {text:'Payment Type',style:'tablehead'}, {text:'Expense Prices',style:'tablehead'}],
-              ...this.expenses.map(p => ([{text:p.expensesname,style:'tablecell'},{ text: new Date(p.expensesdate).getDate() + "/" + (new Date(p.expensesdate).getMonth() + 1) + "/" + (new Date(p.expensesdate).getFullYear()),style:'tablecell'},{ text: p.employeename,style:'tablecell'}, {text: p.paymenttype,style:'tablecell'},{text: "₹" + p.expensesprices,style:'tablecell'}])),
-              [{}, {},{text: 'Total Entry: ',bold:true,fontSize: 14, colSpan:2,alignment: 'right',margin: [0,25,0,0]},{},{text: this.expenses.reduce((sum) => sum + 1, 0),bold:true,fontSize: 14,margin: [0,25,0,0],alignment: 'center'}],
-              [{}, {},{ text:'Total Expenses: ',bold: true,fontSize: 18,colSpan: 2,alignment: 'right'}, {},{text: "₹"+this.expenses.reduce((sum, p) => sum + p.expensesprices, 0),bold:true,fontSize: 18,alignment: 'center'}],
+              [{ text: 'Expenses name', style: 'tablehead' }, { text: 'Expenses Date', style: 'tablehead' }, { text: 'Employee Name', style: 'tablehead' }, { text: 'Payment Type', style: 'tablehead' }, { text: 'Expense Prices', style: 'tablehead' }],
+              ...this.expenses.map(p => ([{ text: p.expensesname, style: 'tablecell' }, { text: new Date(p.expensesdate).getDate() + "/" + (new Date(p.expensesdate).getMonth() + 1) + "/" + (new Date(p.expensesdate).getFullYear()), style: 'tablecell' }, { text: p.employeename, style: 'tablecell' }, { text: p.paymenttype, style: 'tablecell' }, { text: "₹" + p.expensesprices, style: 'tablecell' }])),
+              [{}, {}, { text: 'Total Entry: ', bold: true, fontSize: 14, colSpan: 2, alignment: 'right', margin: [0, 25, 0, 0] }, {}, { text: this.expenses.reduce((sum) => sum + 1, 0), bold: true, fontSize: 14, margin: [0, 25, 0, 0], alignment: 'center' }],
+              [{}, {}, { text: 'Total Expenses: ', bold: true, fontSize: 18, colSpan: 2, alignment: 'right' }, {}, { text: "₹" + this.expenses.reduce((sum, p) => sum + p.expensesprices, 0), bold: true, fontSize: 18, alignment: 'center' }],
 
             ],
             margin: [0, 0, 0, 15]
@@ -293,14 +293,14 @@ export class ExpensesComponent implements OnInit {
           margin: [380, 0, 0, 0],
           fillColor: '#dedede',
         },
-        tablehead:{
-          bold:true,
+        tablehead: {
+          bold: true,
           fontSize: 12,
-          alignment:'center',
+          alignment: 'center',
         },
-        tablecell:{
-          margin:[0,0,0,5],
-          alignment:'center',
+        tablecell: {
+          margin: [0, 0, 0, 5],
+          alignment: 'center',
         }
       }
     };

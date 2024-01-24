@@ -159,7 +159,7 @@ export class EmployeeComponent implements OnInit {
   //   this.selServiceData = [];
   // }
   saveEmployeeDetail() {
-    this.employeeModel.service 
+    this.employeeModel.service
     debugger
     // this.employeeModel.service = this.selServiceData;
     this.employeeModel.isactive = true;
@@ -173,7 +173,7 @@ export class EmployeeComponent implements OnInit {
   getAllEmployee() {
     this.employeeService.getAllEmployeeList().subscribe((data: any) => {
       this.employeeReg = data;
-
+      console.log(this.employeeReg)
       for (let i = 0; i < this.employeeReg.length; i++) {
         this.employeeReg[i].index = i + 1;
       }
